@@ -1,0 +1,877 @@
+{
+  "name": "auto-header-plus",
+  "displayName": "Auto Header Plus",
+  "description": "Auto add header to a new file or existing file",
+  "publisher": "MerBleueAviation",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hks2002/auto-header-plus.git"
+  },
+  "license": "MIT",
+  "version": "0.0.1",
+  "icon": "images/icon.png",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "auto",
+    "file",
+    "header",
+    "comments"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "l10n": "./l10n",
+  "contributes": {
+    "commands": [
+      {
+        "command": "auto-header-plus.addHeader",
+        "title": "Add Header"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Auto Header Plus",
+      "properties": {
+        "auto-header-plus.enableAutoAddOnSave": {
+          "order": 0,
+          "type": "boolean",
+          "default": true,
+          "description": "%auto-header-plus.enableAutoAddOnSave%"
+        },
+        "auto-header-plus.enableAutoAddOnNew": {
+          "order": 0,
+          "type": "boolean",
+          "default": true,
+          "description": "%auto-header-plus.enableAutoAddOnNew%"
+        },
+        "auto-header-plus.allowCreateTimeDiff": {
+          "order": 2,
+          "type": "boolean",
+          "default": true,
+          "description": "%auto-header-plus.allowCreateTimeDiff%"
+        },
+        "auto-header-plus.dateFormat": {
+          "order": 3,
+          "type": "string",
+          "default": "YYYY-MM-DD HH:mm:ss",
+          "description": "%auto-header-plus.dateFormat%"
+        },
+        "auto-header-plus.commentElements": {
+          "order": 4,
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "Author",
+            "CreatedDate",
+            "LastEditors",
+            "LastEditDate",
+            "FilePath",
+            "CopyRight"
+          ],
+          "markdownDescription": "%auto-header-plus.commentElements%"
+        },
+        "auto-header-plus.commentElementsValue": {
+          "order": 5,
+          "type": "object",
+          "default": {
+            "Author": "${git config user.name}<${git config user.email}>",
+            "CreatedDate": "CREATEDDATE",
+            "LastEditors": "${git config user.name}<${git config user.email}>",
+            "LastEditDate": "MODIFIEDDATE",
+            "FilePath": "RELATIVEPATH",
+            "CopyRight": "MerBleueAviation"
+          },
+          "properties": {
+            "Author": {
+              "type": "string",
+              "default": "${git config user.name}<${git config user.email}>",
+              "description": "%auto-header-plus.Author%"
+            },
+            "CreatedDate": {
+              "type": "string",
+              "default": "CREATEDDATE",
+              "enum": [
+                "CREATEDDATE",
+                "MODIFIEDDATE"
+              ]
+            },
+            "LastEditors": {
+              "type": "string",
+              "default": "${git config user.name}<${git config user.email}>"
+            },
+            "LastEditDate": {
+              "type": "string",
+              "default": "MODIFIEDDATE",
+              "enum": [
+                "CREATEDDATE",
+                "MODIFIEDDATE"
+              ]
+            },
+            "FilePath": {
+              "type": "string",
+              "default": "RELATIVEPATH",
+              "enum": [
+                "FULLPATH",
+                "RELATIVEPATH",
+                "SHORTNAMEPATH"
+              ]
+            },
+            "Description": {
+              "type": "string",
+              "default": ""
+            },
+            "CopyRight": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          "additionalProperties": false,
+          "markdownDescription": "%auto-header-plus.commentElementsValue%"
+        },
+        "auto-header-plus.customCommentElementsValue": {
+          "order": 6,
+          "type": "object",
+          "default": {
+            "YourCustomcommentElement1": ""
+          },
+          "properties": {
+            "YourCustomcommentElement1": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          "additionalProperties": true,
+          "markdownDescription": "%auto-header-plus.customCommentElementsValue%"
+        },
+        "auto-header-plus.style.0": {
+          "order": 7,
+          "type": "object",
+          "default": {
+            "enable": true,
+            "applyTo": "c|cpp|h|hpp|cs|java|js|ts|go|php|rs",
+            "firstLineStart": "/**",
+            "firstLineMiddle": "*",
+            "firstLineEnd": "*",
+            "middleLineStart": " * ",
+            "commentElementPrefix": "@",
+            "commentElementSuffix": ": ",
+            "middleLineEnd": "*",
+            "lastLineStart": " *",
+            "lastLineMiddle": "*",
+            "lastLineEnd": "*/",
+            "commentElementWidth": 25,
+            "lineWidth": 80
+          },
+          "properties": {
+            "enable": {
+              "type": "boolean",
+              "default": true,
+              "description": "%auto-header-plus.enable%"
+            },
+            "applyTo": {
+              "type": "string",
+              "default": "c|cpp|h|hpp|cs|java|js|ts|go|php|rs",
+              "description": "%auto-header-plus.applyTo%"
+            },
+            "firstLineStart": {
+              "type": "string",
+              "default": "/*",
+              "maxLength": 4,
+              "description": "%auto-header-plus.firstLineStart%"
+            },
+            "firstLineMiddle": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.firstLineMiddle%"
+            },
+            "firstLineEnd": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.firstLineEnd%"
+            },
+            "middleLineStart": {
+              "type": "string",
+              "default": " *",
+              "maxLength": 4,
+              "description": "%auto-header-plus.middleLineStart%"
+            },
+            "commentElementPrefix": {
+              "type": "string",
+              "default": "@",
+              "maxLength": 4,
+              "description": "%auto-header-plus.commentElementPrefix%"
+            },
+            "commentElementSuffix": {
+              "type": "string",
+              "default": ":",
+              "maxLength": 4,
+              "description": "%auto-header-plus.commentElementSuffix%"
+            },
+            "middleLineEnd": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.middleLineEnd%"
+            },
+            "lastLineStart": {
+              "type": "string",
+              "default": " */",
+              "maxLength": 4,
+              "description": "%auto-header-plus.lastLineStart%"
+            },
+            "lastLineMiddle": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.lastLineMiddle%"
+            },
+            "lastLineEnd": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.lastLineEnd%"
+            },
+            "commentElementWidth": {
+              "type": "integer",
+              "default": 25,
+              "maximum": 25,
+              "description": "%auto-header-plus.commentElementWidth%"
+            },
+            "lineWidth": {
+              "type": "integer",
+              "default": 80,
+              "maximum": 120,
+              "description": "%auto-header-plus.lineWidth%"
+            }
+          },
+          "additionalProperties": false,
+          "markdownDescription": "\n```\n/**\n* @Author      : MerBleueAviation\n* @Date        : 2018-09-27 13:55:00\n*/\n```"
+        },
+        "auto-header-plus.style.1": {
+          "order": 8,
+          "type": "object",
+          "default": {
+            "enable": true,
+            "applyTo": "html|vue",
+            "firstLineStart": "<!--",
+            "firstLineMiddle": "",
+            "firstLineEnd": "",
+            "middleLineStart": "* ",
+            "commentElementPrefix": "@",
+            "commentElementSuffix": ": ",
+            "middleLineEnd": "",
+            "lastLineStart": "-->",
+            "lastLineMiddle": "",
+            "lastLineEnd": "",
+            "commentElementWidth": 25,
+            "lineWidth": 80
+          },
+          "properties": {
+            "enable": {
+              "type": "boolean",
+              "default": true,
+              "description": "%auto-header-plus.enable%"
+            },
+            "applyTo": {
+              "type": "string",
+              "default": "html|vue|md",
+              "description": "%auto-header-plus.applyTo%"
+            },
+            "firstLineStart": {
+              "type": "string",
+              "default": "<!--",
+              "maxLength": 4,
+              "description": "%auto-header-plus.firstLineStart%"
+            },
+            "firstLineMiddle": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.firstLineMiddle%"
+            },
+            "firstLineEnd": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.firstLineEnd%"
+            },
+            "middleLineStart": {
+              "type": "string",
+              "default": "*",
+              "maxLength": 4,
+              "description": "%auto-header-plus.middleLineStart%"
+            },
+            "commentElementPrefix": {
+              "type": "string",
+              "default": "@",
+              "maxLength": 4,
+              "description": "%auto-header-plus.commentElementPrefix%"
+            },
+            "commentElementSuffix": {
+              "type": "string",
+              "default": ":",
+              "maxLength": 4,
+              "description": "%auto-header-plus.commentElementSuffix%"
+            },
+            "middleLineEnd": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.middleLineEnd%"
+            },
+            "lastLineStart": {
+              "type": "string",
+              "default": "-->",
+              "maxLength": 4,
+              "description": "%auto-header-plus.lastLineStart%"
+            },
+            "lastLineMiddle": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.lastLineMiddle%"
+            },
+            "lastLineEnd": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.lastLineEnd%"
+            },
+            "commentElementWidth": {
+              "type": "integer",
+              "default": 25,
+              "maximum": 25,
+              "description": "%auto-header-plus.commentElementWidth%"
+            },
+            "lineWidth": {
+              "type": "integer",
+              "default": 80,
+              "maximum": 120,
+              "description": "%auto-header-plus.lineWidth%"
+            }
+          },
+          "additionalProperties": false,
+          "markdownDescription": "\n```\n<!--\n* @Author      : MerBleueAviation\n* @Date        : 2018-09-27 13:55:00\n-->\n```"
+        },
+        "auto-header-plus.style.2": {
+          "order": 9,
+          "type": "object",
+          "default": {
+            "enable": true,
+            "applyTo": "py",
+            "firstLineStart": "'''",
+            "firstLineMiddle": "",
+            "firstLineEnd": "",
+            "middleLineStart": "",
+            "commentElementPrefix": "@",
+            "commentElementSuffix": ": ",
+            "middleLineEnd": "",
+            "lastLineStart": "'''",
+            "lastLineMiddle": "",
+            "lastLineEnd": "",
+            "commentElementWidth": 25,
+            "lineWidth": 80
+          },
+          "properties": {
+            "enable": {
+              "type": "boolean",
+              "default": true,
+              "description": "%auto-header-plus.enable%"
+            },
+            "applyTo": {
+              "type": "string",
+              "default": "py",
+              "description": "%auto-header-plus.applyTo%"
+            },
+            "firstLineStart": {
+              "type": "string",
+              "default": "'''",
+              "maxLength": 4,
+              "description": "%auto-header-plus.firstLineStart%"
+            },
+            "firstLineMiddle": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.firstLineMiddle%"
+            },
+            "firstLineEnd": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.firstLineEnd%"
+            },
+            "middleLineStart": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.middleLineStart%"
+            },
+            "commentElementPrefix": {
+              "type": "string",
+              "default": "@",
+              "maxLength": 4,
+              "description": "%auto-header-plus.commentElementPrefix%"
+            },
+            "commentElementSuffix": {
+              "type": "string",
+              "default": ":",
+              "maxLength": 4,
+              "description": "%auto-header-plus.commentElementSuffix%"
+            },
+            "middleLineEnd": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.middleLineEnd%"
+            },
+            "lastLineStart": {
+              "type": "string",
+              "default": "'''",
+              "maxLength": 4,
+              "description": "%auto-header-plus.lastLineStart%"
+            },
+            "lastLineMiddle": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.lastLineMiddle%"
+            },
+            "lastLineEnd": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.lastLineEnd%"
+            },
+            "commentElementWidth": {
+              "type": "integer",
+              "default": 25,
+              "maximum": 25,
+              "description": "%auto-header-plus.commentElementWidth%"
+            },
+            "lineWidth": {
+              "type": "integer",
+              "default": 80,
+              "maximum": 120,
+              "description": "%auto-header-plus.lineWidth%"
+            }
+          },
+          "additionalProperties": false,
+          "markdownDescription": "\n```\n'''\n @Author      : MerBleueAviation\n @Date        : 2018-09-27 13:55:00\n'''\n```"
+        },
+        "auto-header-plus.style.3": {
+          "order": 10,
+          "type": "object",
+          "default": {
+            "enable": true,
+            "applyTo": "vbs",
+            "firstLineStart": "'",
+            "firstLineMiddle": "'",
+            "firstLineEnd": "",
+            "middleLineStart": "' ",
+            "commentElementPrefix": "@",
+            "commentElementSuffix": ": ",
+            "middleLineEnd": "",
+            "lastLineStart": "'",
+            "lastLineMiddle": "'",
+            "lastLineEnd": "",
+            "commentElementWidth": 25,
+            "lineWidth": 80
+          },
+          "properties": {
+            "enable": {
+              "type": "boolean",
+              "default": true,
+              "description": "%auto-header-plus.enable%"
+            },
+            "applyTo": {
+              "type": "string",
+              "default": "vbs",
+              "description": "%auto-header-plus.applyTo%"
+            },
+            "firstLineStart": {
+              "type": "string",
+              "default": "'",
+              "maxLength": 4,
+              "description": "%auto-header-plus.firstLineStart%"
+            },
+            "firstLineMiddle": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.firstLineMiddle%"
+            },
+            "firstLineEnd": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.firstLineEnd%"
+            },
+            "middleLineStart": {
+              "type": "string",
+              "default": "'",
+              "maxLength": 4,
+              "description": "%auto-header-plus.middleLineStart%"
+            },
+            "commentElementPrefix": {
+              "type": "string",
+              "default": "@",
+              "maxLength": 4,
+              "description": "%auto-header-plus.commentElementPrefix%"
+            },
+            "commentElementSuffix": {
+              "type": "string",
+              "default": ":",
+              "maxLength": 4,
+              "description": "%auto-header-plus.commentElementSuffix%"
+            },
+            "middleLineEnd": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.middleLineEnd%"
+            },
+            "lastLineStart": {
+              "type": "string",
+              "default": "'",
+              "maxLength": 4,
+              "description": "%auto-header-plus.lastLineStart%"
+            },
+            "lastLineMiddle": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.lastLineMiddle%"
+            },
+            "lastLineEnd": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.lastLineEnd%"
+            },
+            "commentElementWidth": {
+              "type": "integer",
+              "default": 25,
+              "maximum": 25,
+              "description": "%auto-header-plus.commentElementWidth%"
+            },
+            "lineWidth": {
+              "type": "integer",
+              "default": 80,
+              "maximum": 120,
+              "description": "%auto-header-plus.lineWidth%"
+            }
+          },
+          "additionalProperties": false,
+          "markdownDescription": "\n```\n'\n' @Author      : MerBleueAviation\n' @Date        : 2018-09-27 13:55:00\n'\n```"
+        },
+        "auto-header-plus.style.4": {
+          "order": 11,
+          "type": "object",
+          "default": {
+            "enable": true,
+            "applyTo": "sh|bash",
+            "firstLineStart": "####",
+            "firstLineMiddle": "",
+            "firstLineEnd": "",
+            "middleLineStart": "# ",
+            "commentElementPrefix": "@",
+            "commentElementSuffix": ": ",
+            "middleLineEnd": "",
+            "lastLineStart": "####",
+            "lastLineMiddle": "",
+            "lastLineEnd": "",
+            "commentElementWidth": 25,
+            "lineWidth": 80
+          },
+          "properties": {
+            "enable": {
+              "type": "boolean",
+              "default": true,
+              "description": "%auto-header-plus.enable%"
+            },
+            "applyTo": {
+              "type": "string",
+              "default": ".sh;.bash",
+              "description": "%auto-header-plus.applyTo%"
+            },
+            "firstLineStart": {
+              "type": "string",
+              "default": "####",
+              "maxLength": 4,
+              "description": "%auto-header-plus.firstLineStart%"
+            },
+            "firstLineMiddle": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.firstLineMiddle%"
+            },
+            "firstLineEnd": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.firstLineEnd%"
+            },
+            "middleLineStart": {
+              "type": "string",
+              "default": "# ",
+              "maxLength": 4,
+              "description": "%auto-header-plus.middleLineStart%"
+            },
+            "commentElementPrefix": {
+              "type": "string",
+              "default": "@",
+              "maxLength": 4,
+              "description": "%auto-header-plus.commentElementPrefix%"
+            },
+            "commentElementSuffix": {
+              "type": "string",
+              "default": ":",
+              "maxLength": 4,
+              "description": "%auto-header-plus.commentElementSuffix%"
+            },
+            "middleLineEnd": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.middleLineEnd%"
+            },
+            "lastLineStart": {
+              "type": "string",
+              "default": "####",
+              "maxLength": 4,
+              "description": "%auto-header-plus.lastLineStart%"
+            },
+            "lastLineMiddle": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.lastLineMiddle%"
+            },
+            "lastLineEnd": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.lastLineEnd%"
+            },
+            "commentElementWidth": {
+              "type": "integer",
+              "default": 25,
+              "maximum": 25,
+              "description": "%auto-header-plus.commentElementWidth%"
+            },
+            "lineWidth": {
+              "type": "integer",
+              "default": 80,
+              "maximum": 120,
+              "description": "%auto-header-plus.lineWidth%"
+            }
+          },
+          "additionalProperties": false,
+          "markdownDescription": "\n```\n####\n# @Author      : MerBleueAviation\n# @Date        : 2018-09-27 13:55:00\n####\n```"
+        },
+        "auto-header-plus.style.5": {
+          "order": 12,
+          "type": "object",
+          "default": {
+            "enable": true,
+            "applyTo": "lua",
+            "firstLineStart": "--[[",
+            "firstLineMiddle": "",
+            "firstLineEnd": "",
+            "middleLineStart": "",
+            "commentElementPrefix": "@",
+            "commentElementSuffix": ": ",
+            "middleLineEnd": "",
+            "lastLineStart": "--]]",
+            "lastLineMiddle": "",
+            "lastLineEnd": "",
+            "commentElementWidth": 25,
+            "lineWidth": 80
+          },
+          "properties": {
+            "enable": {
+              "type": "boolean",
+              "default": true,
+              "description": "%auto-header-plus.enable%"
+            },
+            "applyTo": {
+              "type": "string",
+              "default": "lua",
+              "description": "%auto-header-plus.applyTo%"
+            },
+            "firstLineStart": {
+              "type": "string",
+              "default": "--[[",
+              "maxLength": 4,
+              "description": "%auto-header-plus.firstLineStart%"
+            },
+            "firstLineMiddle": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.firstLineMiddle%"
+            },
+            "firstLineEnd": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.firstLineEnd%"
+            },
+            "middleLineStart": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.middleLineStart%"
+            },
+            "commentElementPrefix": {
+              "type": "string",
+              "default": "@",
+              "maxLength": 4,
+              "description": "%auto-header-plus.commentElementPrefix%"
+            },
+            "commentElementSuffix": {
+              "type": "string",
+              "default": ":",
+              "maxLength": 4,
+              "description": "%auto-header-plus.commentElementSuffix%"
+            },
+            "middleLineEnd": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.middleLineEnd%"
+            },
+            "lastLineStart": {
+              "type": "string",
+              "default": "--]]",
+              "maxLength": 4,
+              "description": "%auto-header-plus.lastLineStart%"
+            },
+            "lastLineMiddle": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.lastLineMiddle%"
+            },
+            "lastLineEnd": {
+              "type": "string",
+              "default": "",
+              "maxLength": 4,
+              "description": "%auto-header-plus.lastLineEnd%"
+            },
+            "commentElementWidth": {
+              "type": "integer",
+              "default": 25,
+              "maximum": 25,
+              "description": "%auto-header-plus.commentElementWidth%"
+            },
+            "lineWidth": {
+              "type": "integer",
+              "default": 80,
+              "maximum": 120,
+              "description": "%auto-header-plus.lineWidth%"
+            }
+          },
+          "additionalProperties": false,
+          "markdownDescription": "\n```\n--[[\n @Author      : MerBleueAviation\n @Date        : 2018-09-27 13:55:00\n--]]\n```"
+        },
+        "auto-header-plus.additionalComment": {
+          "order": 13,
+          "type": "string",
+          "default": "",
+          "description": "%auto-header-plus.additionalComment%"
+        },
+        "auto-header-plus.enableStyleSymbolCheck": {
+          "order": 0,
+          "type": "boolean",
+          "default": true,
+          "description": "%auto-header-plus.enableStyleSymbolCheck%"
+        },
+        "auto-header-plus.logLevel": {
+          "order": 13,
+          "type": "string",
+          "default": "INFO",
+          "enum": [
+            "DEBUG",
+            "INFO",
+            "WARN",
+            "ERROR",
+            "NONE"
+          ],
+          "enumDescriptions": [
+            "Debug level",
+            "Info level",
+            "Warn level",
+            "Error level",
+            "None level"
+          ]
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "auto-header-plus.addHeader",
+        "key": "ctrl+win+h",
+        "mac": "ctrl+cmd+h",
+        "linux": "ctrl+meta+h",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "deploy": "vsce publish --yarn",
+    "release": "semantic-release"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.177",
+    "dayjs": "^1.10.7"
+  },
+  "comment": "[prettier,eslint-plugin-prettier,eslint-config-prettier][husky,semantic-release,@commitlint/config-conventional,@semantic-release/changelog,@semantic-release/git]",
+  "devDependencies": {
+    "@commitlint/cli": "^13.2.0",
+    "@commitlint/config-conventional": "^13.2.0",
+    "@semantic-release/changelog": "6.0.1",
+    "@semantic-release/git": "10.0.1",
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.74.0",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "@vscode/test-electron": "^2.2.0",
+    "@vscode/vsce": "2.17.0",
+    "eslint": "^8.28.0",
+    "glob": "^8.0.3",
+    "husky": "^8.0.2",
+    "mocha": "^10.1.0",
+    "prettier": "^2.5.1",
+    "eslint-plugin-prettier": "4.2.1",
+    "eslint-config-prettier": "^8.6.0",
+    "semantic-release": "19.0.2",
+    "ts-loader": "^9.4.1",
+    "typescript": "^4.9.3",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.0"
+  }
+}
