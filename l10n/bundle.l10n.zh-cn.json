@@ -1,0 +1,15 @@
+{
+  "Adding header to {0}": "添加头文件到 {0}",
+  "Auto add on new is disabled": "新建文件自动添加头部注释已禁用",
+  "Auto add on save is disabled": "保存文件自动添加头部注释已禁用",
+  "Command {0} return empty": "命令{0}值为空",
+  "Element {0} value didn't set in config": "元素{0}值未设定",
+  "Ext {0} duplicated in config": "后缀 {0} 重复设置",
+  "Ext {0} not found in config": "配置中没有后缀{0}的设置",
+  "File not changed": "文件未改变",
+  "Style {0} {1} line error: {2} {3}": "样式{0} {1}行错误：{2} {3}",
+  "Width is too short": "宽度值太小",
+  "first": "首",
+  "last": "尾",
+  "middle": "中间"
+}
