@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/hks2002/auto-header-plus/compare/v1.0.0...v1.0.1) (2023-02-05)
+
+
+### Bug Fixes
+
+* 🐛build vscode 1.60.0 ([4d43ca7](https://github.com/hks2002/auto-header-plus/commit/4d43ca724e3abf7423825eaeca827a9ded889aa7))
+
 # 1.0.0 (2023-02-05)
 
 
