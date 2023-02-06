@@ -1,3 +1,11 @@
+## [1.0.2](https://github.com/hks2002/auto-header-plus/compare/v1.0.1...v1.0.2) (2023-02-06)
+
+
+### Bug Fixes
+
+* 🐛fix getElementValue error ([6e690cf](https://github.com/hks2002/auto-header-plus/commit/6e690cfb2d09730d075dd8cdf264ff71fb80d1f0))
+* 🐛keep origin val ([c344e66](https://github.com/hks2002/auto-header-plus/commit/c344e66c07ac0711ebca5a16eaa2d08702caad22))
+
 ## [1.0.1](https://github.com/hks2002/auto-header-plus/compare/v1.0.0...v1.0.1) (2023-02-05)
 
 
