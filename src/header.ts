@@ -2,7 +2,7 @@
  * @Author                : Robert Huang<56649783@qq.com>                     *
  * @CreatedDate           : 2023-02-04 00:03:21                               *
  * @LastEditors           : Robert Huang<56649783@qq.com>                     *
- * @LastEditDate          : 2023-02-04 10:56:55                               *
+ * @LastEditDate          : 2023-02-06 14:09:23                               *
  * @FilePath              : auto-header-plus/src/header.ts                    *
  * @CopyRight             : MerBleueAviation                                  *
  *****************************************************************************/
@@ -75,6 +75,25 @@ const getHeaderRange = (doc: vscode.TextDocument, style: ahp.StyleRaw): vscode.R
   return new vscode.Range(startLine, startChar, endLine, endChar)
 }
 
+// get number text between number and number
+// const getNumTxt = (str: string) => {
+//   const found = str.match(/([^\d]*)(\d.*\d)/i)
+//   return found && found.length > 0 ? found[2] : ''
+// }
+
+// get text of element value parts
+const getTxt = (scr: string, target: string) => {
+  const idx = scr.indexOf(target)
+  const len = target.length
+
+  if (idx > -1) {
+    const found = scr.slice(idx + len).match(/(\W*\s+)(.*)(\s+\W)/i)
+    return found && found.length > 0 ? found[2] : ''
+  } else {
+    return ''
+  }
+}
+
 /**
  * Get header comment value by header range
  * @param range Header range
@@ -94,25 +113,67 @@ const getElementValue = (
     if (lineProp.isEmptyOrWhitespace) {
       continue
     }
+    // build by self current style
     if (lineProp.text.includes(targetElement)) {
-      elementContent = lineProp.text
-      // build element text, fill with space
-      const elementText = buildLine(
-        style.commentElementPrefix + targetElement,
-        ' ',
-        style.commentElementSuffix,
-        style.commentElementWidth
-      )
-
-      // get element value
-      if (style.middleLineEnd.length > 0) {
-        elementContent = elementContent
-          .slice(style.middleLineStart.length + elementText.length, style.middleLineEnd.length * -1)
-          .trim()
-      } else {
-        elementContent = elementContent.slice(style.middleLineStart.length + elementText.length).trim()
-      }
+      elementContent = getTxt(lineProp.text, targetElement)
       break
+    }
+
+    // build by other tools, we guress the name of element
+    const lowerCaseText = lineProp.text.toLowerCase()
+    if (targetElement.toUpperCase().includes('CREATE')) {
+      // resume it contains create/created date/datetime
+      elementContent = getTxt(lowerCaseText, 'createdatetime')
+      if (elementContent.length > 0) {
+        break
+      }
+      elementContent = getTxt(lowerCaseText, 'createdate')
+      if (elementContent.length > 0) {
+        break
+      }
+      elementContent = getTxt(lowerCaseText, 'createddatetime')
+      if (elementContent.length > 0) {
+        break
+      }
+      elementContent = getTxt(lowerCaseText, 'createddate')
+      if (elementContent.length > 0) {
+        break
+      }
+      elementContent = getTxt(lowerCaseText, 'datetime')
+      if (elementContent.length > 0) {
+        break
+      }
+      elementContent = getTxt(lowerCaseText, 'date')
+      if (elementContent.length > 0) {
+        break
+      }
+    }
+
+    if (targetElement.toUpperCase().includes('AUTHOR')) {
+      elementContent = getTxt(lowerCaseText, 'author')
+      if (elementContent.length > 0) {
+        break
+      }
+      elementContent = getTxt(lowerCaseText, 'creator')
+      if (elementContent.length > 0) {
+        break
+      }
+      elementContent = getTxt(lowerCaseText, 'createdby')
+      if (elementContent.length > 0) {
+        break
+      }
+    }
+
+    if (targetElement.toUpperCase().includes('DESC')) {
+      elementContent = getTxt(lowerCaseText, 'desc')
+      if (elementContent.length > 0) {
+        break
+      }
+
+      elementContent = getTxt(lowerCaseText, 'description')
+      if (elementContent.length > 0) {
+        break
+      }
     }
   }
 
