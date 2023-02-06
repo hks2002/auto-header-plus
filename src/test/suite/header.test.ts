@@ -1,3 +1,12 @@
+/******************************************************************************
+ * @Author                : Robert Huang<56649783@qq.com>                     *
+ * @CreatedDate           : 2023-01-06 18:04:18                               *
+ * @LastEditors           : Robert Huang<56649783@qq.com>                     *
+ * @LastEditDate          : 2023-02-06 20:17:39                               *
+ * @FilePath              : auto-header-plus/src/test/suite/header.test.ts    *
+ * @CopyRight             : MerBleueAviation                                  *
+ *****************************************************************************/
+
 /* eslint-disable @typescript-eslint/naming-convention */
 import * as assert from 'assert'
 import * as vscode from 'vscode'
@@ -112,8 +121,37 @@ suite('Header Test Suite', () => {
     assert.strictEqual(buildLine('/****', ' ', '****/', 5), '/********/')
   })
 
-  test('getElementValue test', async () => {
+  test('getElementValue 1 test', async () => {
+    // @Author    : Auto Header Plus
     const element = buildLine('@Author', ' ', ': ', styleC.commentElementWidth)
+    const doc = await vscode.workspace.openTextDocument({
+      language: 'javascript',
+      content: `/**\r * ${element} Auto Header Plus \r */\r \r`
+    })
+    const range = getHeaderRange(doc, styleC)
+    console.log(doc.getText(), range)
+    vscode.commands.executeCommand('workbench.action.closeActiveEditor')
+
+    const val = getElementValue(doc, range, styleC, 'Author')
+    assert.strictEqual(val, 'Auto Header Plus')
+  })
+  test('getElementValue 2 test', async () => {
+    // @Author: Auto Header Plus
+    const element = buildLine('@Author', '', ':', styleC.commentElementWidth)
+    const doc = await vscode.workspace.openTextDocument({
+      language: 'javascript',
+      content: `/**\r * ${element} Auto Header Plus \r */\r \r`
+    })
+    const range = getHeaderRange(doc, styleC)
+    console.log(doc.getText(), range)
+    vscode.commands.executeCommand('workbench.action.closeActiveEditor')
+
+    const val = getElementValue(doc, range, styleC, 'Author')
+    assert.strictEqual(val, 'Auto Header Plus')
+  })
+  test('getElementValue 3 test', async () => {
+    // @Author Auto Header Plus
+    const element = buildLine('@Author', '', '', styleC.commentElementWidth)
     const doc = await vscode.workspace.openTextDocument({
       language: 'javascript',
       content: `/**\r * ${element} Auto Header Plus \r */\r \r`
