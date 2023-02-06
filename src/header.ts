@@ -2,7 +2,7 @@
  * @Author                : Robert Huang<56649783@qq.com>                     *
  * @CreatedDate           : 2023-02-04 00:03:21                               *
  * @LastEditors           : Robert Huang<56649783@qq.com>                     *
- * @LastEditDate          : 2023-02-06 14:09:23                               *
+ * @LastEditDate          : 2023-02-06 20:11:05                               *
  * @FilePath              : auto-header-plus/src/header.ts                    *
  * @CopyRight             : MerBleueAviation                                  *
  *****************************************************************************/
@@ -87,7 +87,11 @@ const getTxt = (scr: string, target: string) => {
   const len = target.length
 
   if (idx > -1) {
-    const found = scr.slice(idx + len).match(/(\W*\s+)(.*)(\s+\W)/i)
+    const toBeFound = scr.slice(idx + len)
+    // style1: : 2021-02-04 00:03:21
+    // style2:  : 2021-02-04 00:03:21
+    // style3:  2021-02-04 00:03:21
+    const found = toBeFound.match(/(\W*\s+)(.*)(\s*\W)/i)
     return found && found.length > 0 ? found[2] : ''
   } else {
     return ''
