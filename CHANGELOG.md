@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/hks2002/auto-header-plus/compare/v1.0.2...v1.1.0) (2023-02-07)
+
+
+### Features
+
+* ✨config active without restart vscode ([75e7e9c](https://github.com/hks2002/auto-header-plus/commit/75e7e9c0c094d5d95620a9642dba98a353ed20ad))
+
 ## [1.0.2](https://github.com/hks2002/auto-header-plus/compare/v1.0.1...v1.0.2) (2023-02-06)
 
 
