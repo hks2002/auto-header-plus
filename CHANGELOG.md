@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/hks2002/auto-header-plus/compare/v1.2.0...v1.2.1) (2023-02-07)
+
+
+### Bug Fixes
+
+* 🐛remove tail's space of middle line ([27781d4](https://github.com/hks2002/auto-header-plus/commit/27781d467c7648f4460858b78ac54ceac907760c))
+
 # [1.2.0](https://github.com/hks2002/auto-header-plus/compare/v1.1.0...v1.2.0) (2023-02-07)
 
 
