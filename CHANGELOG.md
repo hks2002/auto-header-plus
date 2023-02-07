@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/hks2002/auto-header-plus/compare/v1.1.0...v1.2.0) (2023-02-07)
+
+
+### Features
+
+* ✨allow vsce duplicate publish ([33466cc](https://github.com/hks2002/auto-header-plus/commit/33466cc677e8f1d5fae4361b66c70ca061e38e69))
+
 # [1.1.0](https://github.com/hks2002/auto-header-plus/compare/v1.0.2...v1.1.0) (2023-02-07)
 
 
