@@ -2,15 +2,15 @@
  * @Author                : Robert Huang<56649783@qq.com>                     *
  * @CreatedDate           : 2023-02-04 00:03:21                               *
  * @LastEditors           : Robert Huang<56649783@qq.com>                     *
- * @LastEditDate          : 2023-02-06 20:11:05                               *
+ * @LastEditDate          : 2023-02-07 15:27:44                               *
  * @FilePath              : auto-header-plus/src/header.ts                    *
  * @CopyRight             : MerBleueAviation                                  *
  *****************************************************************************/
 
 import path from 'path'
 import * as vscode from 'vscode'
-import { config, logger } from './extension'
-import { getApplyStyle, getDateValue, getFinalStringContainsCmd, getPathValue, splitString } from './utils'
+import { logger } from './extension'
+import { config, getApplyStyle, getDateValue, getFinalStringContainsCmd, getPathValue, splitString } from './utils'
 
 const t = vscode.l10n.t
 const SPECVALUE = ['MODIFIEDDATE', 'CREATEDDATE', 'FULLPATH', 'RELATIVEPATH', 'SHORTNAMEPATH']
@@ -235,7 +235,7 @@ const genNewHeader = (
   oldCommentElementsValues: ahp.CommentElementsValues
 ): string => {
   let headerText = ''
-  const allCreateDateDiff = config.get('allCreateDateDiff', true)
+  const allCreateDateDiff = config().get('allCreateDateDiff', true)
   const eolText = doc.eol === vscode.EndOfLine.LF ? '\r' : '\r\n'
 
   // firstLine
@@ -288,7 +288,7 @@ const genNewHeader = (
   }
 
   // additional comment
-  const additionalComment = config.get('additionalComment', '')
+  const additionalComment = config().get('additionalComment', '')
   if (additionalComment.length > 0) {
     const additionalCommentText = getFinalStringContainsCmd(additionalComment) || ''
     splitString(additionalCommentText, style.lineWidth).forEach((line) => {
@@ -309,22 +309,24 @@ const addHeader = () => {
       try {
         logger.info(t('Adding header to {0}', editor.document.fileName))
         const ext = path.extname(editor.document.fileName)
-        const style = getApplyStyle(config.get('style', {}), ext)
+
+        const cfg = config()
+        const style = getApplyStyle(cfg.get('style', {}), ext)
         if (!style) {
           return
         }
 
         const headerRange = getHeaderRange(editor.document, style)
 
-        const commentElements = config.get('commentElements', [])
-        const commentElementsValue = config.get('commentElementsValue', {})
-        const customCommentElementsValue = config.get('customCommentElementsValue', {})
+        const commentElements = cfg.get('commentElements', [])
+        const commentElementsValue = cfg.get('commentElementsValue', {})
+        const customCommentElementsValue = cfg.get('customCommentElementsValue', {})
         const oldCommentElementsValue = {} as ahp.CommentElementsValues
         for (const element of commentElements) {
           const elementValue = getElementValue(editor.document, headerRange, style, element)
           oldCommentElementsValue[element] = elementValue
         }
-        const dateFormate = config.get('dateFormate', 'YYYY-MM-DD HH:mm:ss')
+        const dateFormate = cfg.get('dateFormate', 'YYYY-MM-DD HH:mm:ss')
 
         let headerText = genNewHeader(
           editor.document,

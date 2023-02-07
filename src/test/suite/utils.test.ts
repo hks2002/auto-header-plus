@@ -1,12 +1,28 @@
+/******************************************************************************
+ * @Author                : Robert Huang<56649783@qq.com>                     *
+ * @CreatedDate           : 2023-02-07 15:29:47                               *
+ * @LastEditors           : Robert Huang<56649783@qq.com>                     *
+ * @LastEditDate          : 2023-02-07 15:29:47                               *
+ * @FilePath              : auto-header-plus/src/test/suite/utils.test.ts     *
+ * @CopyRight             : MerBleueAviation                                  *
+ *****************************************************************************/
+
 import * as assert from 'assert'
 import dayjs from 'dayjs'
 import * as vscode from 'vscode'
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
-import { config } from '../../extension'
-import { executeCommand, getApplyStyle, getDateValue, getFinalStringContainsCmd, getPathValue } from '../../utils'
+import {
+  config,
+  executeCommand,
+  getApplyStyle,
+  getDateValue,
+  getFinalStringContainsCmd,
+  getPathValue
+} from '../../utils'
 import { styleC, stylePy } from '../config'
 
+const cfg = config()
 suite('Utils Test Suite', () => {
   test('executeCommand test', () => {
     assert.strictEqual(executeCommand('echo TEST'), 'TEST')
@@ -15,10 +31,10 @@ suite('Utils Test Suite', () => {
 
   test('getApplyStyle test', () => {
     assert.strictEqual(getApplyStyle({}, 'js'), undefined)
-    assert.deepStrictEqual(getApplyStyle(config.get('style', {}), '.js'), styleC)
-    assert.deepStrictEqual(getApplyStyle(config.get('style', {}), 'js'), styleC)
-    assert.deepStrictEqual(getApplyStyle(config.get('style', {}), 'j'), undefined)
-    assert.deepStrictEqual(getApplyStyle(config.get('style', {}), 'py'), stylePy)
+    assert.deepStrictEqual(getApplyStyle(cfg.get('style', {}), '.js'), styleC)
+    assert.deepStrictEqual(getApplyStyle(cfg.get('style', {}), 'js'), styleC)
+    assert.deepStrictEqual(getApplyStyle(cfg.get('style', {}), 'j'), undefined)
+    assert.deepStrictEqual(getApplyStyle(cfg.get('style', {}), 'py'), stylePy)
   })
 
   test('getDateValue test', () => {

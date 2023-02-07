@@ -2,7 +2,7 @@
  * @Author                : Robert Huang<56649783@qq.com>                     *
  * @CreatedDate           : 2023-02-04 20:40:57                               *
  * @LastEditors           : Robert Huang<56649783@qq.com>                     *
- * @LastEditDate          : 2023-02-04 20:41:05                               *
+ * @LastEditDate          : 2023-02-07 15:22:50                               *
  * @FilePath              : auto-header-plus/src/utils.ts                     *
  * @CopyRight             : MerBleueAviation                                  *
  *****************************************************************************/
@@ -10,11 +10,15 @@
 import dayjs from 'dayjs'
 import * as path from 'path'
 import * as vscode from 'vscode'
-import { config, logger } from './extension'
+import packageJson from '../package.json'
+import { logger } from './extension'
 
 const t = vscode.l10n.t
 const execSync = require('child_process').execSync
 
+const config = () => {
+  return vscode.workspace.getConfiguration(packageJson.name)
+}
 /**
  * Run command and return result, if error, return empty string
  * @param command
@@ -95,7 +99,7 @@ const getApplyStyle = (styles: ahp.Styles, ext: string): ahp.StyleRaw | undefine
  */
 const isStyleValid = (key: string, style: ahp.StyleRaw): boolean => {
   // if turn off style check, always return true
-  if (config.get('enableStyleCheck') === false) {
+  if (config().get('enableStyleCheck') === false) {
     return true
   }
 
@@ -253,4 +257,4 @@ const splitString = (str: string, width: number): string[] => {
   }
   return arr
 }
-export { getApplyStyle, executeCommand, getFinalStringContainsCmd, getDateValue, getPathValue, splitString }
+export { getApplyStyle, executeCommand, getFinalStringContainsCmd, getDateValue, getPathValue, splitString, config }
