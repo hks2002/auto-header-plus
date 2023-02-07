@@ -2,7 +2,7 @@
  * @Author                : Robert Huang<56649783@qq.com>                     *
  * @CreatedDate           : 2023-02-04 00:03:21                               *
  * @LastEditors           : Robert Huang<56649783@qq.com>                     *
- * @LastEditDate          : 2023-02-07 15:27:44                               *
+ * @LastEditDate          : 2023-02-07 20:48:10                               *
  * @FilePath              : auto-header-plus/src/header.ts                    *
  * @CopyRight             : MerBleueAviation                                  *
  *****************************************************************************/
@@ -281,7 +281,7 @@ const genNewHeader = (
     // build whole middle line, fill with space
     headerText += buildLine(
       style.middleLineStart + elementText + elementValueText,
-      ' ',
+      style.middleLineEnd.length > 0 ? ' ' : '',
       style.middleLineEnd + eolText,
       style.lineWidth
     )
