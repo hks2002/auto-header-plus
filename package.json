@@ -106,6 +106,12 @@
           "default": "YYYY-MM-DD HH:mm:ss",
           "description": "%auto-header-plus.dateFormat%"
         },
+        "auto-header-plus.pathContainsWorkspaceFolder": {
+          "order": 4,
+          "type": "boolean",
+          "default": true,
+          "description": "%auto-header-plus.pathContainsWorkspaceFolder%"
+        }, 
         "auto-header-plus.commandTimesout": {
           "order": 5,
               "type": "integer",

@@ -22,5 +22,6 @@
   "auto-header-plus.lineWidth": "Line width, include the start and end, set to `0` to disable",
   "auto-header-plus.middleLineEnd": "Middle line end string",
   "auto-header-plus.middleLineStart": "Middle line start string",
-  "auto-header-plus.commandTimesout": "Command timeout, unit: ms"
+  "auto-header-plus.commandTimesout": "Command timeout, unit: ms",
+  "auto-header-plus.pathContainsWorkspaceFolder": "Path contains workspace folder name, disable it if your file path is too long, such as java maven project, only works in `RELATIVEPATH`"
 }

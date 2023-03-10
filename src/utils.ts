@@ -2,7 +2,7 @@
  * @Author                : Robert Huang<56649783@qq.com>                     *
  * @CreatedDate           : 2023-02-04 20:40:57                               *
  * @LastEditors           : Robert Huang<56649783@qq.com>                     *
- * @LastEditDate          : 2023-03-10 16:36:06                               *
+ * @LastEditDate          : 2023-03-10 16:41:14                               *
  * @FilePath              : auto-header-plus/src/utils.ts                     *
  * @CopyRight             : MerBleueAviation                                  *
  *****************************************************************************/
@@ -193,7 +193,7 @@ const getPathValue = (key: string, uri: vscode.Uri): string => {
     case 'FULLPATH':
       return uri?.fsPath.replace(/\\/g, '/') || ''
     case 'RELATIVEPATH': {
-      return vscode.workspace.asRelativePath(uri, true).replace(/\\/g, '/') || ''
+      return config().get("pathContainsWorkspaceFolder") ? vscode.workspace.asRelativePath(uri, true).replace(/\\/g, '/') || '' : vscode.workspace.asRelativePath(uri, false).replace(/\\/g, '/') || ''
     }
     case 'SHORTNAMEPATH':
       return path.basename(uri?.fsPath.replace(/\\/g, '/')) || ''
