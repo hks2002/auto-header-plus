@@ -2,7 +2,7 @@
   "Adding header to {0}": "Adding header to {0}",
   "Auto add on new is disabled": "Auto add on new is disabled",
   "Auto add on save is disabled": "Auto add on save is disabled",
-  "Command {0} return empty": "Command {0} return empty",
+  "Command {0} return empty, probably is caused by system busy": "Command {0} return empty, probably is caused by system busy",
   "Element {0} value didn't set in config": "Element {0} value didn't set in config",
   "Ext {0} duplicated in config": "Ext {0} duplicated in config",
   "Ext {0} not found in config": " Ext {0} not found in config",

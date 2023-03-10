@@ -21,5 +21,6 @@
   "auto-header-plus.lastLineStart": "末行开始字符串",
   "auto-header-plus.lineWidth": "行宽度, 包括开始和结束, 如果值为0, 则不会自动填充",
   "auto-header-plus.middleLineEnd": "中间行结束字符串",
-  "auto-header-plus.middleLineStart": "中间行开始字符串"
+  "auto-header-plus.middleLineStart": "中间行开始字符串",
+  "auto-header-plus.commandTimesout": "命令超时时间, 单位: ms"
 }

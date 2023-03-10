@@ -21,5 +21,6 @@
   "auto-header-plus.lastLineStart": "Last line start string",
   "auto-header-plus.lineWidth": "Line width, include the start and end, set to `0` to disable",
   "auto-header-plus.middleLineEnd": "Middle line end string",
-  "auto-header-plus.middleLineStart": "Middle line start string"
+  "auto-header-plus.middleLineStart": "Middle line start string",
+  "auto-header-plus.commandTimesout": "Command timeout, unit: ms"
 }

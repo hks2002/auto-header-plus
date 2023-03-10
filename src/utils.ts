@@ -2,7 +2,7 @@
  * @Author                : Robert Huang<56649783@qq.com>                     *
  * @CreatedDate           : 2023-02-04 20:40:57                               *
  * @LastEditors           : Robert Huang<56649783@qq.com>                     *
- * @LastEditDate          : 2023-02-07 15:22:50                               *
+ * @LastEditDate          : 2023-03-10 16:36:06                               *
  * @FilePath              : auto-header-plus/src/utils.ts                     *
  * @CopyRight             : MerBleueAviation                                  *
  *****************************************************************************/
@@ -29,7 +29,7 @@ const executeCommand = (command: string): string => {
   try {
     rst = execSync(command, {
       encoding: 'utf8',
-      timeout: 1000,
+      timeout: config().get('commandTimesout') || 3000,
       cmd: vscode.workspace.asRelativePath
     })
   } catch (e: unknown) {
@@ -37,7 +37,7 @@ const executeCommand = (command: string): string => {
   }
 
   if (rst.trim() === '') {
-    logger.warn(t('Command {0} return empty', command))
+    logger.warn(t('Command {0} return empty, probably is caused by system busy', command))
   }
   return rst.trimEnd()
 }

@@ -106,8 +106,15 @@
           "default": "YYYY-MM-DD HH:mm:ss",
           "description": "%auto-header-plus.dateFormat%"
         },
+        "auto-header-plus.commandTimesout": {
+          "order": 5,
+              "type": "integer",
+              "default": 3000,
+              "maximum": 10000,
+          "description": "%auto-header-plus.commandTimesout%"
+        },
         "auto-header-plus.commentElements": {
-          "order": 4,
+          "order": 6,
           "type": "array",
           "items": {
             "type": "string"
@@ -123,7 +130,7 @@
           "markdownDescription": "%auto-header-plus.commentElements%"
         },
         "auto-header-plus.commentElementsValue": {
-          "order": 5,
+          "order": 7,
           "type": "object",
           "default": {
             "Author": "${git config user.name}<${git config user.email}>",
@@ -181,7 +188,7 @@
           "markdownDescription": "%auto-header-plus.commentElementsValue%"
         },
         "auto-header-plus.customCommentElementsValue": {
-          "order": 6,
+          "order": 8,
           "type": "object",
           "default": {
             "YourCustomcommentElement1": ""
@@ -196,7 +203,7 @@
           "markdownDescription": "%auto-header-plus.customCommentElementsValue%"
         },
         "auto-header-plus.style.0": {
-          "order": 7,
+          "order": 9,
           "type": "object",
           "default": {
             "enable": true,
@@ -302,7 +309,7 @@
           "markdownDescription": "\n```\n/**\n* @Author      : MerBleueAviation\n* @Date        : 2018-09-27 13:55:00\n*/\n```"
         },
         "auto-header-plus.style.1": {
-          "order": 8,
+          "order": 10,
           "type": "object",
           "default": {
             "enable": true,
@@ -408,7 +415,7 @@
           "markdownDescription": "\n```\n<!--\n* @Author      : MerBleueAviation\n* @Date        : 2018-09-27 13:55:00\n-->\n```"
         },
         "auto-header-plus.style.2": {
-          "order": 9,
+          "order": 11,
           "type": "object",
           "default": {
             "enable": true,
@@ -514,7 +521,7 @@
           "markdownDescription": "\n```\n'''\n @Author      : MerBleueAviation\n @Date        : 2018-09-27 13:55:00\n'''\n```"
         },
         "auto-header-plus.style.3": {
-          "order": 10,
+          "order": 12,
           "type": "object",
           "default": {
             "enable": true,
@@ -620,7 +627,7 @@
           "markdownDescription": "\n```\n'\n' @Author      : MerBleueAviation\n' @Date        : 2018-09-27 13:55:00\n'\n```"
         },
         "auto-header-plus.style.4": {
-          "order": 11,
+          "order": 13,
           "type": "object",
           "default": {
             "enable": true,
@@ -726,7 +733,7 @@
           "markdownDescription": "\n```\n####\n# @Author      : MerBleueAviation\n# @Date        : 2018-09-27 13:55:00\n####\n```"
         },
         "auto-header-plus.style.5": {
-          "order": 12,
+          "order": 14,
           "type": "object",
           "default": {
             "enable": true,
@@ -832,7 +839,7 @@
           "markdownDescription": "\n```\n--[[\n @Author      : MerBleueAviation\n @Date        : 2018-09-27 13:55:00\n--]]\n```"
         },
         "auto-header-plus.additionalComment": {
-          "order": 13,
+          "order": 15,
           "type": "string",
           "default": "",
           "description": "%auto-header-plus.additionalComment%"
@@ -844,7 +851,7 @@
           "description": "%auto-header-plus.enableStyleSymbolCheck%"
         },
         "auto-header-plus.logLevel": {
-          "order": 13,
+          "order": 16,
           "type": "string",
           "default": "INFO",
           "enum": [
