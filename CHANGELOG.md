@@ -1,3 +1,11 @@
+# [1.3.0](https://github.com/hks2002/auto-header-plus/compare/v1.2.1...v1.3.0) (2023-03-10)
+
+
+### Features
+
+* ✨add commandTimesout setting ([eb7da7a](https://github.com/hks2002/auto-header-plus/commit/eb7da7a9de39e61b112bf37a60d5829ab22acb16))
+* ✨add pathContainsWorkspaceFolder setting ([9bab7bf](https://github.com/hks2002/auto-header-plus/commit/9bab7bfef6bad99d622bb7e0c62fa2164c5cfaba))
+
 ## [1.2.1](https://github.com/hks2002/auto-header-plus/compare/v1.2.0...v1.2.1) (2023-02-07)
 
 
