@@ -2,6 +2,10 @@ name: Deploy To Vscode Marketplace
 
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+      - 'v*.*.*'
 
 jobs:
   deploy:
