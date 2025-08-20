@@ -1,11 +1,12 @@
 {
+  "auto-header-plus.Author": "Author",
   "auto-header-plus.additionalComment": "Add additional multiple line comment, you can use string: `Additional comment`, or command: `${cat license.txt}`",
   "auto-header-plus.allowCreateTimeDiff": "Allow create time in comment diff from the created time of file properties",
   "auto-header-plus.applyTo": "Apply to file With extensions, case insensitive, join it with `|`, `,`, `;`, `:`,`、`, `/`,` `, and extension`.`is optional, such as `js|jsx|ts|tsx`",
   "auto-header-plus.commentElementPrefix": "Comment element prefix string",
   "auto-header-plus.commentElements": "These comment elements will be added to the header, add/remove and change the order as you like, beware of you must set the `commentElementsValue` or `customCommentElementsValue` for each element, if not, it will be insert a empty line",
   "auto-header-plus.commentElementSuffix": "Comment element suffix string",
-  "auto-header-plus.commentElementsValue": "The value of the comment elements, you can use string: `My Name`, or command: `${git config user.name}`, or string with command: `My Name ${git config user.email}` or special string `MODIFIEDDATE`,`CREATEDDATE`,`FULLPATH`,`RELATIVEPATH`,`SHORTNAMEPATH`, there are case insensitive",
+  "auto-header-plus.commentElementsValue": "The value of the comment elements, you can use string: `My Name`, or command: `${git config user.name}`, or string with command: `My Name ${git config user.email}` or special string `MODIFIED_DATE`,`CREATED_DATE`,`FULL_PATH`,`RELATIVE_PATH`,`SHORTNAME_PATH`, there are case insensitive",
   "auto-header-plus.commentElementWidth": "Comment element width, include the prefix and suffix, set to `0` to disable",
   "auto-header-plus.customCommentElementsValue": "If you want to add a custom comment element, you can add it here, and keep it's key  in the `commentElements` list",
   "auto-header-plus.dateFormat": "Date time format",
@@ -22,6 +23,6 @@
   "auto-header-plus.lineWidth": "Line width, include the start and end, set to `0` to disable",
   "auto-header-plus.middleLineEnd": "Middle line end string",
   "auto-header-plus.middleLineStart": "Middle line start string",
-  "auto-header-plus.commandTimesout": "Command timeout, unit: ms",
-  "auto-header-plus.pathContainsWorkspaceFolder": "Path contains workspace folder name, disable it if your file path is too long, such as java maven project, only works in `RELATIVEPATH`"
+  "auto-header-plus.commandTimesOut": "Command timeout, unit: ms",
+  "auto-header-plus.pathContainsWorkspaceFolder": "Path contains workspace folder name, disable it if your file path is too long, such as java maven project, only works in `RELATIVE_PATH`"
 }

@@ -1,50 +1,48 @@
-## [1.2.1](https://github.com/hks2002/auto-header-plus/compare/v1.2.0...v1.2.1) (2023-02-07)
+# [1.3.0](https://github.com/hks2002/auto-header-plus/compare/v1.2.1...v1.3.0) (2025-08-20)
 
 
 ### Bug Fixes
 
-* 🐛remove tail's space of middle line ([27781d4](https://github.com/hks2002/auto-header-plus/commit/27781d467c7648f4460858b78ac54ceac907760c))
-
-# [1.2.0](https://github.com/hks2002/auto-header-plus/compare/v1.1.0...v1.2.0) (2023-02-07)
+* 🐛fix build error ([ff0ec0f](https://github.com/hks2002/auto-header-plus/commit/ff0ec0fd39c9ba99f2f634c6d0e5ae936ccd14f2))
 
 
 ### Features
 
-* ✨allow vsce duplicate publish ([33466cc](https://github.com/hks2002/auto-header-plus/commit/33466cc677e8f1d5fae4361b66c70ca061e38e69))
+* ✨add commandTimesout setting ([eb7da7a](https://github.com/hks2002/auto-header-plus/commit/eb7da7a9de39e61b112bf37a60d5829ab22acb16))
+* ✨add pathContainsWorkspaceFolder setting ([9bab7bf](https://github.com/hks2002/auto-header-plus/commit/9bab7bfef6bad99d622bb7e0c62fa2164c5cfaba))
 
-# [1.1.0](https://github.com/hks2002/auto-header-plus/compare/v1.0.2...v1.1.0) (2023-02-07)
+# [1.3.0](https://github.com/hks2002/auto-header-plus/compare/v1.2.1...v1.3.0) (2025-08-20)
+
+
+### Bug Fixes
+
+* 🐛fix build error ([ff0ec0f](https://github.com/hks2002/auto-header-plus/commit/ff0ec0fd39c9ba99f2f634c6d0e5ae936ccd14f2))
 
 
 ### Features
 
-* ✨config active without restart vscode ([75e7e9c](https://github.com/hks2002/auto-header-plus/commit/75e7e9c0c094d5d95620a9642dba98a353ed20ad))
+* ✨add commandTimesout setting ([eb7da7a](https://github.com/hks2002/auto-header-plus/commit/eb7da7a9de39e61b112bf37a60d5829ab22acb16))
+* ✨add pathContainsWorkspaceFolder setting ([9bab7bf](https://github.com/hks2002/auto-header-plus/commit/9bab7bfef6bad99d622bb7e0c62fa2164c5cfaba))
 
-## [1.0.2](https://github.com/hks2002/auto-header-plus/compare/v1.0.1...v1.0.2) (2023-02-06)
-
-
-### Bug Fixes
-
-* 🐛fix getElementValue error ([6e690cf](https://github.com/hks2002/auto-header-plus/commit/6e690cfb2d09730d075dd8cdf264ff71fb80d1f0))
-* 🐛keep origin val ([c344e66](https://github.com/hks2002/auto-header-plus/commit/c344e66c07ac0711ebca5a16eaa2d08702caad22))
-
-## [1.0.1](https://github.com/hks2002/auto-header-plus/compare/v1.0.0...v1.0.1) (2023-02-05)
+# [1.3.0](https://github.com/hks2002/auto-header-plus/compare/v1.2.1...v1.3.0) (2025-08-20)
 
 
 ### Bug Fixes
 
-* 🐛build vscode 1.60.0 ([4d43ca7](https://github.com/hks2002/auto-header-plus/commit/4d43ca724e3abf7423825eaeca827a9ded889aa7))
-
-# 1.0.0 (2023-02-05)
+* 🐛fix build error ([ff0ec0f](https://github.com/hks2002/auto-header-plus/commit/ff0ec0fd39c9ba99f2f634c6d0e5ae936ccd14f2))
 
 
-### Bug Fixes
+### Features
 
-* 🐛fix github actions error ([bbd9c60](https://github.com/hks2002/auto-header-plus/commit/bbd9c6028c8fa27f5a1cf976678948cad269cd13))
-* 🐛fix github actions error ([3eb985f](https://github.com/hks2002/auto-header-plus/commit/3eb985fe9446c7a5d136c679ea6073595b685927))
+* ✨add commandTimesout setting ([eb7da7a](https://github.com/hks2002/auto-header-plus/commit/eb7da7a9de39e61b112bf37a60d5829ab22acb16))
+* ✨add pathContainsWorkspaceFolder setting ([9bab7bf](https://github.com/hks2002/auto-header-plus/commit/9bab7bfef6bad99d622bb7e0c62fa2164c5cfaba))
 
-# 1.0.0 (2023-02-04)
+# Change Log
 
+All notable changes to the "test" extension will be documented in this file.
 
-### Bug Fixes
+Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-* 🐛fix github actions error ([3eb985f](https://github.com/hks2002/auto-header-plus/commit/3eb985fe9446c7a5d136c679ea6073595b685927))
+## [Unreleased]
+
+- Initial release

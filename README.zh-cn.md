@@ -9,7 +9,7 @@
 
 # Auto Header
 
-![Logo](https://github.com/hks2002/auto-header-plus/raw/master/images/icon.png)
+![Logo](https://github.com/hks2002/auto-header-plus/raw/master/src/images/icon.png)
 
 ![Github Version](https://img.shields.io/github/package-json/v/hks2002/auto-header-plus) ![Github Build Status](https://img.shields.io/github/actions/workflow/status/hks2002/auto-header-plus/Build.yml) ![GitHub License](https://img.shields.io/github/license/hks2002/auto-header-plus) ![GitHub Starts](https://img.shields.io/github/stars/hks2002/auto-header-plus)
 ![VS marketplace Version](https://img.shields.io/visual-studio-marketplace/v/MerBleueAviation.auto-header-plus) ![downloads](https://img.shields.io/visual-studio-marketplace/d/MerBleueAviation.auto-header-plus) ![installs](https://img.shields.io/visual-studio-marketplace/i/MerBleueAviation.auto-header-plus) ![rating](https://img.shields.io/visual-studio-marketplace/r/MerBleueAviation.auto-header-plus)
@@ -96,10 +96,10 @@
   - 末行: `lastLineStart`, `lastLineMiddle`, `lastLineEnd`
   - 其他: `commentElementWidth`,`lineWidth`, `dateFormat`。
 
-- 支持`命令行`结果和特殊值`MODIFIEDDATE`, `CREATEDDATE`, `FULLPATH`, `RELATIVEPATH`, `SHORTNAMEPATH`作为注释元素的值，如: `git config user.name`，`git config user.email`， `cat license.md`。
+- 支持`命令行`结果和特殊值`MODIFIED_DATE`, `CREATED_DATE`, `FULL_PATH`, `RELATIVE_PATH`, `SHORTNAME_PATH`作为注释元素的值，如: `git config user.name`，`git config user.email`， `cat license.md`。
 
 - 配置方便，可以直接在 UI 界面配置，也可以在`settings.json`中配置。
-  ![ui.zh-cn](https://github.com/hks2002/auto-header-plus/raw/master/images/ui.zh-cn.png)
+  ![ui.zh-cn](https://github.com/hks2002/auto-header-plus/raw/master/src/images/ui.zh-cn.png)
 
 通过配置，可以实现以下效果：
 
@@ -169,7 +169,7 @@ import packageJson from '../package.json'
     FilePath: 'RelativePath',
     CopyRight: ''
   },
-  customCommentElementsValue: { YourCustomcommentElement1: '' },
+  customCommentElementsValue: { YourCustomCommentElement1: '' },
   style: {
     '0': {
       enable: true,

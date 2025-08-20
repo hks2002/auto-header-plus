@@ -9,7 +9,7 @@
 
 # Auto Header
 
-![Logo](https://github.com/hks2002/auto-header-plus/raw/master/images/icon.png)
+![Logo](https://github.com/hks2002/auto-header-plus/raw/master/src/images/icon.png)
 
 ![Github Version](https://img.shields.io/github/package-json/v/hks2002/auto-header-plus) ![Github Build Status](https://img.shields.io/github/actions/workflow/status/hks2002/auto-header-plus/Build.yml) ![GitHub License](https://img.shields.io/github/license/hks2002/auto-header-plus) ![GitHub Starts](https://img.shields.io/github/stars/hks2002/auto-header-plus)
 ![VS marketplace Version](https://img.shields.io/visual-studio-marketplace/v/MerBleueAviation.auto-header-plus) ![downloads](https://img.shields.io/visual-studio-marketplace/d/MerBleueAviation.auto-header-plus) ![installs](https://img.shields.io/visual-studio-marketplace/i/MerBleueAviation.auto-header-plus) ![rating](https://img.shields.io/visual-studio-marketplace/r/MerBleueAviation.auto-header-plus)
@@ -96,12 +96,12 @@ This extension let you automatically add a header to the top of the current file
   - Last Line: `lastLineStart`, `lastLineMiddle`, `lastLineEnd`
   - Others: `commentElementWidth`,`lineWidth`, `dateFormat`。
 
-- Support set comment element value to `Command` result: `git config user.name`，`git config user.email`， `cat license.md`， or special value: `MODIFIEDDATE`, `CREATEDDATE`, `FULLPATH`, `RELATIVEPATH`, `SHORTNAMEPATH`。
+- Support set comment element value to `Command` result: `git config user.name`，`git config user.email`， `cat license.md`， or special value: `MODIFIED_DATE`, `CREATED_DATE`, `FULL_PATH`, `RELATIVE_PATH`, `SHORTNAME_PATH`。
 
 - Easy configuration, you can set them in the settings UI or `settings.json`。
-  ![ui](https://github.com/hks2002/auto-header-plus/raw/master/images/ui.png)
+  ![ui](https://github.com/hks2002/auto-header-plus/raw/master/src/images/ui.png)
 
-  It can achieve the following effects after configurate:
+  It can achieve the following effects after configure:
 
 ```
 /***************************************
@@ -142,7 +142,7 @@ This extension let you automatically add a header to the top of the current file
     FilePath: 'RelativePath',
     CopyRight: ''
   },
-  customCommentElementsValue: { YourCustomcommentElement1: '' },
+  customCommentElementsValue: { YourCustomCommentElement1: '' },
   style: {
     '0': {
       enable: true,
