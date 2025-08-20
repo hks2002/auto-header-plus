@@ -2,11 +2,9 @@
  * @Author                : Robert Huang<56649783@qq.com>                     *
  * @CreatedDate           : 2025-08-19 23:31:28                               *
  * @LastEditors           : Robert Huang<56649783@qq.com>                     *
- * @LastEditDate          : 2025-08-20 18:07:30                               *
- * @FilePath              : test/src/main/core.js                             *
+ * @LastEditDate          : 2025-08-21 02:04:38                               *
  * @CopyRight             : MerBleueAviation                                  *
  *****************************************************************************/
-
 const path = require('path')
 const vscode = require('vscode')
 const logger = require('./logger')
@@ -56,8 +54,8 @@ const getHeaderRange = (doc, style) => {
     }
     // i can't be the last line, and the following line must be empty or whitespace
     if (lineProp.text.endsWith(lastLineSymbol) && i < doc.lineCount - 1) {
-        endLine = i + 1
-        endChar = 0
+      endLine = i
+      endChar = lineProp.text.length
       break
     }
   }
@@ -328,4 +326,4 @@ const addHeader = () => {
   }
 }
 // const throttleAddHeader = throttle(addHeader, config.get('throttleTime', 60000), { leading: true, trailing: false })
-module.exports = addHeader
+module.exports = { getHeaderRange, addHeader, buildLine, genNewHeader, getElementValue }

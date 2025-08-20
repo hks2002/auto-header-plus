@@ -2,10 +2,9 @@
  * @Author                : Robert Huang<56649783@qq.com>                     *
  * @CreatedDate           : 2025-08-19 11:11:56                               *
  * @LastEditors           : Robert Huang<56649783@qq.com>                     *
- * @LastEditDate          : 2025-08-20 12:50:32                               *
+ * @LastEditDate          : 2025-08-21 02:05:00                               *
  * @CopyRight             : MerBleueAviation                                  *
  *****************************************************************************/
-
 const vscode = require('vscode')
 const path = require('path')
 const dayjs = require('dayjs')
@@ -64,6 +63,10 @@ const getApplyStyle = (styles, ext) => {
   const matchedStyle = []
 
   for (const key in styles) {
+    if (!styles[key].applyTo) {
+      continue
+    }
+
     const applyTo = styles[key].applyTo.toLowerCase()
 
     const extArr = applyTo.replace(/[,|;|、|:|.|/||]/g, ' ').split(' ')
@@ -258,8 +261,8 @@ const splitString = (str, width) => {
 }
 
 module.exports = {
-  getApplyStyle,
   executeCommand,
+  getApplyStyle,
   getFinalString,
   getDateValue,
   getPathValue,

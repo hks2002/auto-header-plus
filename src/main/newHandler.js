@@ -2,14 +2,13 @@
  * @Author                : Robert Huang<56649783@qq.com>                     *
  * @CreatedDate           : 2025-08-19 12:00:23                               *
  * @LastEditors           : Robert Huang<56649783@qq.com>                     *
- * @LastEditDate          : 2025-08-20 13:14:10                               *
+ * @LastEditDate          : 2025-08-21 02:04:46                               *
  * @CopyRight             : MerBleueAviation                                  *
  *****************************************************************************/
-
 const vscode = require('vscode')
-const addHeader = require('./core')
 const config = require('./config')
 const logger = require('./logger')
+const { addHeader } = require('./core')
 
 const t = vscode.l10n.t
 

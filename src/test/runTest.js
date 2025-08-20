@@ -1,17 +1,8 @@
 /******************************************************************************
  * @Author                : Robert Huang<56649783@qq.com>                     *
- * @CreatedDate           : 2025-08-20 17:08:26                               *
+ * @CreatedDate           : 2025-08-20 22:05:51                               *
  * @LastEditors           : Robert Huang<56649783@qq.com>                     *
- * @LastEditDate          : 2025-08-20 17:08:27                               *
- * @FilePath              : test/src/test/runTest.js                          *
- * @CopyRight             : MerBleueAviation                                  *
- *****************************************************************************/
-
-/******************************************************************************
- * @Author                : Robert Huang<56649783@qq.com>                     *
- * @CreatedDate           : 2025-08-18 15:18:32                               *
- * @LastEditors           : Robert Huang<56649783@qq.com>                     *
- * @LastEditDate          : 2025-08-20 12:51:18                               *
+ * @LastEditDate          : 2025-08-20 22:05:51                               *
  * @CopyRight             : MerBleueAviation                                  *
  *****************************************************************************/
 const path = require('path')
