@@ -2,16 +2,15 @@
  * @Author                : Robert Huang<56649783@qq.com>                     *
  * @CreatedDate           : 2025-08-18 19:02:18                               *
  * @LastEditors           : Robert Huang<56649783@qq.com>                     *
- * @LastEditDate          : 2025-08-20 12:50:43                               *
+ * @LastEditDate          : 2025-08-21 01:56:51                               *
  * @CopyRight             : MerBleueAviation                                  *
  *****************************************************************************/
 
 const vscode = require('vscode')
-const packageJson = require('d:/GitHub/test/package.json')
 
 class Logger {
   constructor() {
-    this.outputChannel = vscode.window.createOutputChannel(packageJson.displayName)
+    this.outputChannel = vscode.window.createOutputChannel('Auto Header Plus')
     // 'DEBUG' | 'INFO' | 'WARN' | 'ERROR' | 'NONE'
     this.logLevel = 'INFO'
   }
