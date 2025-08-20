@@ -2,10 +2,6 @@ name: Deploy To Vscode Marketplace
 
 on:
   workflow_dispatch:
-  workflow_run:
-    workflows: ['Build_Release']
-    types:
-      - completed
 
 jobs:
   deploy:
