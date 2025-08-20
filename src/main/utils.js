@@ -64,6 +64,10 @@ const getApplyStyle = (styles, ext) => {
   const matchedStyle = []
 
   for (const key in styles) {
+    if (!styles[key].applyTo) {
+      continue
+    }
+
     const applyTo = styles[key].applyTo.toLowerCase()
 
     const extArr = applyTo.replace(/[,|;|、|:|.|/||]/g, ' ').split(' ')
@@ -258,8 +262,8 @@ const splitString = (str, width) => {
 }
 
 module.exports = {
-  getApplyStyle,
   executeCommand,
+  getApplyStyle,
   getFinalString,
   getDateValue,
   getPathValue,

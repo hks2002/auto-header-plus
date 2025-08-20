@@ -56,8 +56,8 @@ const getHeaderRange = (doc, style) => {
     }
     // i can't be the last line, and the following line must be empty or whitespace
     if (lineProp.text.endsWith(lastLineSymbol) && i < doc.lineCount - 1) {
-        endLine = i + 1
-        endChar = 0
+      endLine = i
+      endChar = lineProp.text.length
       break
     }
   }
@@ -328,4 +328,4 @@ const addHeader = () => {
   }
 }
 // const throttleAddHeader = throttle(addHeader, config.get('throttleTime', 60000), { leading: true, trailing: false })
-module.exports = addHeader
+module.exports = { getHeaderRange, addHeader, buildLine, genNewHeader, getElementValue }

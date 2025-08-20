@@ -7,9 +7,9 @@
  *****************************************************************************/
 
 const vscode = require('vscode')
-const addHeader = require('./core')
 const config = require('./config')
 const logger = require('./logger')
+const { addHeader } = require('./core')
 
 const t = vscode.l10n.t
 
