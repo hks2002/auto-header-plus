@@ -11,6 +11,13 @@ All notable changes to the "test" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.4.1](https://github.com/hks2002/auto-header-plus/compare/v1.4.0...v1.4.1) (2025-08-20)
+
+
+### Bug Fixes
+
+* 🐛fix publish ([e8a43e6](https://github.com/hks2002/auto-header-plus/commit/e8a43e6f2522c4a90e6fa17603b801aff93a8139))
+
 ## [1.4.0](https://github.com/hks2002/auto-header-plus/compare/v1.3.0...v1.4.0) (2025-08-20)
 
 
