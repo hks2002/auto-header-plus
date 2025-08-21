@@ -850,16 +850,14 @@
     "publish": "vsce publish --yarn --skip-duplicate"
   },
   "dependencies": {
-    "lodash": "^4.17.20",
     "dayjs": "^1.11.13"
   },
   "devDependencies": {
-    "@types/vscode": "^1.60.0",
     "@vscode/test-electron": "^2.2.0",
-    "glob": "^11.0.3",
-    "mocha": "^11.7.1",
     "eslint": "^9.33.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
-    "eslint-config-prettier": "^10.1.8"
+    "glob": "^11.0.3",
+    "mocha": "^11.7.1"
   }
 }

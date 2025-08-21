@@ -1,9 +1,12 @@
+.github/**
 .vscode/**
 .vscode-test/**
-test/**
+src/test/**
 .gitignore
 .yarnrc
-vsc-extension-quickstart.md
 **/jsconfig.json
 **/*.map
 **/.eslintrc.json
+vsc-extension-quickstart.md
+cspell.json
+cspell.project-words.txt
