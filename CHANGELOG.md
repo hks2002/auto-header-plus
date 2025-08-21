@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/hks2002/auto-header-plus/compare/v1.4.0...v1.5.0) (2025-08-21)
+
+
+### Features
+
+* ✨clean source ([9c6f15b](https://github.com/hks2002/auto-header-plus/commit/9c6f15b8313ae5f08461a92836a08158555060d8))
+
 ## [1.4.0](https://github.com/hks2002/auto-header-plus/compare/v1.3.0...v1.4.0) (2025-08-20)
 
 
