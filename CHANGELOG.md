@@ -12,7 +12,7 @@
 
 ### Features
 
-* ✨add commandTimesout setting ([eb7da7a](https://github.com/hks2002/auto-header-plus/commit/eb7da7a9de39e61b112bf37a60d5829ab22acb16))
+* ✨add commandTimeout setting ([eb7da7a](https://github.com/hks2002/auto-header-plus/commit/eb7da7a9de39e61b112bf37a60d5829ab22acb16))
 * ✨add pathContainsWorkspaceFolder setting ([9bab7bf](https://github.com/hks2002/auto-header-plus/commit/9bab7bfef6bad99d622bb7e0c62fa2164c5cfaba))
 * ✨allow vsce duplicate publish ([33466cc](https://github.com/hks2002/auto-header-plus/commit/33466cc677e8f1d5fae4361b66c70ca061e38e69))
 * ✨config active without restart vscode ([75e7e9c](https://github.com/hks2002/auto-header-plus/commit/75e7e9c0c094d5d95620a9642dba98a353ed20ad))

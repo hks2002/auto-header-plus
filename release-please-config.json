@@ -1,0 +1,8 @@
+{
+    "packages": {
+        ".": {
+            "include-component-in-tag": true,
+            "changelog-path": "CHANGELOG.md"
+        }
+    }
+}

@@ -2,14 +2,17 @@
  * @Author                : Robert Huang<56649783@qq.com>                     *
  * @CreatedDate           : 2023-02-07 15:29:47                               *
  * @LastEditors           : Robert Huang<56649783@qq.com>                     *
- * @LastEditDate          : 2023-02-07 15:29:47                               *
- * @FilePath              : auto-header-plus/src/test/suite/utils.test.ts     *
+ * @LastEditDate          : 2026-01-19 15:05:53                               *
+ * @FilePath              : auto-header-plus/src/test/suite/utils.test.js     *
  * @CopyRight             : MerBleueAviation                                  *
  *****************************************************************************/
+
+
 const vscode = require('vscode')
 const assert = require('assert')
 const config = require('../../main/config')
 const dayjs = require('dayjs')
+const {suite, test} = require('mocha')
 const { executeCommand, getApplyStyle, getDateValue, getFinalString, getPathValue } = require('../../main/utils')
 
 const styleC = config.style['0']

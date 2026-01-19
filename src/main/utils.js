@@ -2,12 +2,14 @@
  * @Author                : Robert Huang<56649783@qq.com>                     *
  * @CreatedDate           : 2025-08-19 11:11:56                               *
  * @LastEditors           : Robert Huang<56649783@qq.com>                     *
- * @LastEditDate          : 2025-08-21 02:05:00                               *
+ * @LastEditDate          : 2026-01-19 16:07:41                               *
+ * @FilePath              : auto-header-plus/src/main/utils.js                *
  * @CopyRight             : MerBleueAviation                                  *
  *****************************************************************************/
+
+
 const vscode = require('vscode')
 const path = require('path')
-const dayjs = require('dayjs')
 const config = require('./config')
 const logger = require('./logger')
 
@@ -165,6 +167,35 @@ const isStyleValid = (key, style) => {
 }
 
 /**
+ * Format date with simple tokens
+ * Supported: YYYY MM DD HH mm ss
+ */
+/**
+ * Format date with simple tokens
+ * Supported: YYYY MM DD HH mm ss
+ * @param {Date} date
+ * @param {string} fmt
+ * @returns {string}
+ */
+function formatDate(date, fmt) {
+  date = date || new Date()
+  fmt = fmt || 'YYYY-MM-DD HH:mm:ss'
+
+  const pad = n => String(n).padStart(2, '0')
+
+  const map = {
+    YYYY: String(date.getFullYear()),
+    MM: pad(date.getMonth() + 1),
+    DD: pad(date.getDate()),
+    HH: pad(date.getHours()),
+    mm: pad(date.getMinutes()),
+    ss: pad(date.getSeconds())
+  }
+
+  return fmt.replace(/YYYY|MM|DD|HH|mm|ss/g, m => map[m])
+}
+
+/**
  * Get spec date value by key, if key is `CREATED_DATE` and oriVal is not empty, return oriVal
  * @param {string} key spec key
  * @param {string} fmt format
@@ -172,11 +203,15 @@ const isStyleValid = (key, style) => {
  * @returns {string} date value
  */
 const getDateValue = (key, fmt, oriVal) => {
+  const format = fmt || 'YYYY-MM-DD HH:mm:ss'
+
   switch (key) {
     case 'MODIFIED_DATE':
-      return dayjs().format(fmt || 'YYYY-MM-DD HH:mm:ss')
+      return formatDate(new Date(), format)
     case 'CREATED_DATE':
-      return oriVal ? dayjs(oriVal).format(fmt || 'YYYY-MM-DD HH:mm:ss') : dayjs().format(fmt || 'YYYY-MM-DD HH:mm:ss')
+      return oriVal
+        ? formatDate(new Date(oriVal), format)
+        : formatDate(new Date(), format)
     default:
       return ''
   }

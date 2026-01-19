@@ -2,9 +2,13 @@
  * @Author                : Robert Huang<56649783@qq.com>                     *
  * @CreatedDate           : 2025-08-19 23:31:28                               *
  * @LastEditors           : Robert Huang<56649783@qq.com>                     *
- * @LastEditDate          : 2025-08-21 02:04:38                               *
+ * @LastEditDate          : 2026-01-19 16:30:32                               *
+ * @FilePath              : auto-header-plus/src/main/core.js                 *
  * @CopyRight             : MerBleueAviation                                  *
  *****************************************************************************/
+
+
+
 const path = require('path')
 const vscode = require('vscode')
 const logger = require('./logger')
@@ -34,8 +38,14 @@ const getHeaderRange = (doc, style) => {
 
   const firstLineSymbol = style.firstLineStart || style.firstLineMiddle || style.firstLineEnd || '/**'
   const lastLineSymbol = style.lastLineEnd || style.lastLineMiddle || style.lastLineStart || '**/'
+
   // find first line start
   for (let i = 0; i < doc.lineCount; i++) {
+    // skip shell/bash/sh file first line
+     if (style.applyTo === "shell" || style.applyTo === "bash" || style.applyTo === "sh"){
+      continue
+     }
+
     const lineProp = doc.lineAt(i)
     if (lineProp.isEmptyOrWhitespace) {
       continue

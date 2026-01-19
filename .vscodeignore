@@ -1,7 +1,7 @@
 .github/**
 .vscode/**
 .vscode-test/**
-src/test/**
+src/**
 .gitignore
 .yarnrc
 **/jsconfig.json
@@ -10,3 +10,7 @@ src/test/**
 vsc-extension-quickstart.md
 cspell.json
 cspell.project-words.txt
+esbuild.config.js
+eslint.config.js
+release-please-config.json
+

@@ -9,7 +9,31 @@
     "type": "git",
     "url": "https://github.com/hks2002/auto-header-plus.git"
   },
-  "icon": "src/images/icon.png",
+  "scripts": {
+    "compile": "cspell . && node esbuild.config.js",
+    "watch": "node esbuild.config.js --watch",
+    "lint": "eslint src --ext js",
+    "spell-check": "cspell .",
+    "pretest": "yarn run compile && yarn run lint",
+    "test": "node ./src/test/runTest.js",
+    "vscode:prepublish": "yarn run compile",
+    "publish": "vsce publish --yarn --skip-duplicate",
+    "package": "vsce package --yarn"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.7.1",
+    "cspell": "^9.6.0",
+    "esbuild": "^0.27.2",
+    "eslint": "^9.39.2",
+    "glob": "^11.0.3",
+    "globals": "^17.0.0",
+    "mocha": "^11.7.1"
+  },
+  "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.60.0"
   },
@@ -22,11 +46,9 @@
     "header",
     "comments"
   ],
-  "activationEvents": [
-    "onStartupFinished"
-  ],
-  "main": "src/main/extension.js",
-  "l10n": "src/l10n",
+  "activationEvents": [  ],
+  "main": "dist/extension.js",
+  "l10n": "./l10n",
   "contributes": {
     "commands": [
       {
@@ -842,22 +864,5 @@
         "when": "editorTextFocus"
       }
     ]
-  },
-  "scripts": {
-    "lint": "eslint .",
-    "test": "node ./src/test/runTest.js",
-    "package": "vsce package",
-    "publish": "vsce publish --yarn --skip-duplicate"
-  },
-  "dependencies": {
-    "dayjs": "^1.11.13"
-  },
-  "devDependencies": {
-    "@vscode/test-electron": "^2.2.0",
-    "eslint": "^9.33.0",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.4",
-    "glob": "^11.0.3",
-    "mocha": "^11.7.1"
   }
 }
