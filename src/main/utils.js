@@ -301,5 +301,6 @@ module.exports = {
   getFinalString,
   getDateValue,
   getPathValue,
-  splitString
+  splitString,
+  formatDate
 }

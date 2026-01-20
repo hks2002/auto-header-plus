@@ -1,10 +1,11 @@
-/******************************************************************************
- * @Author                : Robert Huang<56649783@qq.com>                     *
- * @CreatedDate           : 2025-08-19 12:00:23                               *
- * @LastEditors           : Robert Huang<56649783@qq.com>                     *
- * @LastEditDate          : 2025-08-21 02:04:53                               *
- * @CopyRight             : MerBleueAviation                                  *
- *****************************************************************************/
+/*******************************************************************************
+ * @Author                : Robert Huang<56649783@qq.com>                      *
+ * @CreatedDate           : 2025-08-19 12:00:23                                *
+ * @LastEditors           : Robert Huang<56649783@qq.com>                      *
+ * @LastEditDate          : 2026-01-20 19:07:59                                *
+ * @FilePath              : auto-header-plus/src/main/saveHandler.js           *
+ * @CopyRight             : MerBleueAviation                                   *
+ ******************************************************************************/
 const vscode = require('vscode')
 const config = require('./config')
 const logger = require('./logger')
@@ -25,6 +26,6 @@ const saveHandler = (e) => {
     // Log message if auto add on save is disabled
     logger.info(t('Auto add on save is disabled'))
   }
-}
+} 
 
 module.exports = saveHandler

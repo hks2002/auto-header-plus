@@ -1,38 +1,28 @@
-/******************************************************************************
- * @Author                : Robert Huang<56649783@qq.com>                     *
- * @CreatedDate           : 2025-08-18 20:15:08                               *
- * @LastEditors           : Robert Huang<56649783@qq.com>                     *
- * @LastEditDate          : 2026-01-19 16:37:38                               *
- * @FilePath              : auto-header-plus/src/test/suite/core.test.js      *
- * @CopyRight             : MerBleueAviation                                  *
- *****************************************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
+/*******************************************************************************
+ * @Author                : Robert Huang<56649783@qq.com>                      *
+ * @CreatedDate           : 2025-08-18 20:15:08                                *
+ * @LastEditors           : Robert Huang<56649783@qq.com>                      *
+ * @LastEditDate          : 2026-01-20 19:06:55                                *
+ * @FilePath              : auto-header-plus/src/test/suite/core.test.js       *
+ * @CopyRight             : MerBleueAviation                                   *
+ ******************************************************************************/
 const vscode = require('vscode');
 const assert = require('assert');
 const { getHeaderRange, buildLine, getElementValue, genNewHeader } = require('../../main/core.js');
-const { suite, test } = require('mocha');
+const { suite, test, before } = require('mocha');
 
-const config = require('../../main/config.js')
+let styleC;
 
-// Mock style object for testing
-const styleC = config.style['0']
+suite('🧪Header Test Suite', () => {
+  before(async () => {
+    const ext = vscode.extensions.getExtension('MerBleueAviation.auto-header-plus');
+    if (ext) {
+      await ext.activate();
+    }
+    const config = vscode.workspace.getConfiguration('auto-header-plus');
+    styleC = config.style['0'];
+  });
 
-suite('Header Test Suite', () => {
   test('getHeaderRange 1 test', async () => {
     const doc = await vscode.workspace.openTextDocument({ language: 'javascript', content: '' })
     const range = getHeaderRange(doc, styleC)
@@ -210,6 +200,7 @@ suite('Header Test Suite', () => {
   test('getHeaderRange with shebang test', async () => {
     // Mock shell script style (similar to style.4 in package.json)
     const shellStyle = {
+      applyTo: "shell",
       firstLineStart: "####",
       firstLineMiddle: "",
       firstLineEnd: "",
@@ -223,35 +214,65 @@ suite('Header Test Suite', () => {
     };
 
     // Test document with shebang and header comment
-    const docWithShebang = await vscode.workspace.openTextDocument({
+    const text1 = `#!/bin/bash
+
+echo "Hello World"`
+
+    const doc1 = await vscode.workspace.openTextDocument({
       language: 'shellscript',
-      content: '#!/bin/bash\r\n###############################################################################\r\n# @Author                : YourName<your-email@example.com>                   #\r\n# @CreatedDate           : 2025-01-19 15:30:00                               #\r\n# @LastEditors           : YourName<your-email@example.com>                   #\r\n# @LastEditDate          : 2025-01-19 15:30:00                               #\r\n# @FilePath              : /path/to/your/script.sh                           #\r\n# @CopyRight             : YourCompany                                       #\r\n###############################################################################\r\necho "Hello World"'
+      content: text1
     });
 
-    const rangeWithShebang = getHeaderRange(docWithShebang, shellStyle);
-    console.log('Range with shebang:', rangeWithShebang);
-    
-    // Should find header starting from line 1 (after shebang), not line 0
-    assert.strictEqual(rangeWithShebang.start.line, 1);
-    assert.strictEqual(rangeWithShebang.start.character, 0);
-    // The actual range only covers the first line of the header, not the whole header block
+    const range1 = getHeaderRange(doc1, shellStyle);
+    console.log('Range with shebang:', text1, range1);
+
+    assert.strictEqual(range1.start.line, 1);
+    assert.strictEqual(range1.start.character, 0);
+
+    // Test document with shebang and header comment
+    const text2 = `#!/bin/bash
+#######################
+# @Author             #
+# @CreatedDate        #
+# @LastEditors        #
+# @LastEditDate       #
+# @FilePath           #
+# @CopyRight          #
+#######################
+echo "Hello World"`
+
+    const doc2 = await vscode.workspace.openTextDocument({
+      language: 'shellscript',
+      content: text2
+    });
+
+    const range2 = getHeaderRange(doc2, shellStyle);
+    console.log('Range with shebang:', text2, range2);
+
+    assert.strictEqual(range2.start.line, 1);
+    assert.strictEqual(range2.start.character, 0);
 
     // Test document without shebang for comparison
-    const docWithoutShebang = await vscode.workspace.openTextDocument({
+    const text3 = `#######################
+# @Author             #
+# @CreatedDate        #
+# @LastEditors        #
+# @LastEditDate       #
+# @FilePath           #
+# @CopyRight          #
+#######################
+echo "Hello World"`
+
+    const doc3 = await vscode.workspace.openTextDocument({
       language: 'shellscript',
-      content: '###############################################################################\r\n# @Author                : YourName<your-email@example.com>                   #\r\n# @CreatedDate           : 2025-01-19 15:30:00                               #\r\n# @LastEditors           : YourName<your-email@example.com>                   #\r\n# @LastEditDate          : 2025-01-19 15:30:00                               #\r\n# @FilePath              : /path/to/your/script.sh                           #\r\n# @CopyRight             : YourCompany                                       #\r\n###############################################################################\r\necho "Hello World"'
+      content: text3
     });
 
-    const rangeWithoutShebang = getHeaderRange(docWithoutShebang, shellStyle);
-    console.log('Range without shebang:', rangeWithoutShebang);
-    
-    // Should find header starting from line 0 (first line)
-    assert.strictEqual(rangeWithoutShebang.start.line, 0);
-    assert.strictEqual(rangeWithoutShebang.start.character, 0);
+    const range3 = getHeaderRange(doc3, shellStyle);
+    console.log('Range without shebang:', text3, range3);
 
-    // Verify that the function correctly skips the shebang line when present
-    assert.notStrictEqual(rangeWithShebang.start.line, rangeWithoutShebang.start.line);
-    assert.strictEqual(rangeWithShebang.start.line, rangeWithoutShebang.start.line + 1);
+    assert.strictEqual(range3.start.line, 0);
+    assert.strictEqual(range3.start.character, 0);
 
     vscode.commands.executeCommand('workbench.action.closeActiveEditor');
   })
