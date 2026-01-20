@@ -5,6 +5,16 @@ on:
   push:
     branches:
       - 'master'
+
+# https://github.com/OWNER/REPO/settings/actions
+# MUST CHANGE GITHUB_TOKEN PERMISSION FROM READ TO WRITE
+# MUST CHANGE GITHUB_TOKEN PERMISSION ALLOW PULL REQUESTS
+# ⚠ ⚠ ⚠ You need merge pull request manually ⚠ ⚠ ⚠
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
 jobs:
   build:
     strategy:
@@ -26,14 +36,8 @@ jobs:
       - name: Run testing
         run: yarn test
 
-      #- name: Semantic Release
-      #  uses: cycjimmy/semantic-release-action@v4
-      #  env:
-      #    # MUST CHANGE GITHUB_TOKEN PERMISSION FROM READ TO WRITE
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: release-please
-        uses: googleapis/release-please-action@v3
+      - uses: googleapis/release-please-action@v4
         with:
-          release-type: node
           token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: node
+          config-file: release-please-config.json
