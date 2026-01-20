@@ -61,17 +61,17 @@ const getHeaderRange = (doc, style) => {
       break // once found, break for loop
     }
   }
-  
+
   // find last line, from the first line start line
   if (foundStart) {
     // Set initial end line to start line
     endLine = startLine
-    
+
     // Continue searching until we find the end line or reach the end of file
     for (let i = startLine + 1; i < doc.lineCount; i++) {
       const lineProp = doc.lineAt(i)
       const lineText = lineProp.text.trim()
-      
+
       // Check if this is the end line
       if (lineText.endsWith(lastLineSymbol.trim())) {
         endLine = i
@@ -88,7 +88,7 @@ const getHeaderRange = (doc, style) => {
         break
       }
     }
-    
+
     // Make sure we found the end line
     if (endLine === startLine) {
       // If end line not found, try to find any line with the end symbol
@@ -102,7 +102,7 @@ const getHeaderRange = (doc, style) => {
       }
     }
   }
-  
+
   // If no header comment found but has shebang, return range starting from line 1
   if (!foundStart && hasShebang) {
     return new vscode.Range(1, 0, 1, 0)
