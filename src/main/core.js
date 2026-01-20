@@ -2,7 +2,7 @@
  * @Author                : Robert Huang<56649783@qq.com>                      *
  * @CreatedDate           : 2025-08-19 23:31:28                                *
  * @LastEditors           : Robert Huang<56649783@qq.com>                      *
- * @LastEditDate          : 2026-01-20 18:59:23                                *
+ * @LastEditDate          : 2026-01-20 22:29:35                                *
  * @FilePath              : auto-header-plus/src/main/core.js                  *
  * @CopyRight             : MerBleueAviation                                   *
  ******************************************************************************/
@@ -363,7 +363,9 @@ const addHeader = () => {
           customCommentElementsValue,
           oldCommentElementsValue
         )
-        logger.info(`${headerRange.start.line.toString()}  ${headerRange.end.line.toString()}`)
+
+        logger.debug(`Line:${headerRange.start.line.toString()} -> ${headerRange.end.line.toString()}`)
+
         editBuilder.replace(headerRange, headerText)
       } catch (e) {
         logger.error('', e)
@@ -372,4 +374,4 @@ const addHeader = () => {
   }
 }
 // const throttleAddHeader = throttle(addHeader, config.get('throttleTime', 60000), { leading: true, trailing: false })
-module.exports = { getHeaderRange, addHeader, buildLine, genNewHeader, getElementValue }
+module.exports = { getHeaderRange, addHeader, buildLine, genNewHeader, getElementValue }  
