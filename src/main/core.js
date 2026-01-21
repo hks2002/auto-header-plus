@@ -2,7 +2,7 @@
  * @Author                : Robert Huang<56649783@qq.com>                      *
  * @CreatedDate           : 2025-08-19 23:31:28                                *
  * @LastEditors           : Robert Huang<56649783@qq.com>                      *
- * @LastEditDate          : 2026-01-20 22:29:35                                *
+ * @LastEditDate          : 2026-01-21 09:33:50                                *
  * @FilePath              : auto-header-plus/src/main/core.js                  *
  * @CopyRight             : MerBleueAviation                                   *
  ******************************************************************************/
@@ -36,76 +36,42 @@ const getHeaderRange = (doc, style) => {
 
   const firstLineSymbol = style.firstLineStart || style.firstLineMiddle || style.firstLineEnd || '/**'
   const lastLineSymbol = style.lastLineEnd || style.lastLineMiddle || style.lastLineStart || '**/'
-  const middleLineSymbol = style.middleLineStart || ' * '
 
   // Check if it's a shell file and has a shebang line
-  const hasShebang = doc.lineCount > 0 && doc.lineAt(0).text.startsWith("#!")
+  const extArr = style.applyTo.replace(/[,|;|、|:|.|/||]/g, ' ').split(' ')
+  const isShellFile = extArr.includes("bash") || extArr.includes("sh")
+  const hasShebang = isShellFile && doc.lineCount > 0 && doc.lineAt(0).text.startsWith("#!")
   console.debug('hasShebang:', hasShebang)
 
-  // Set initial start line based on shebang presence
-  startLine = hasShebang ? 1 : 0
-  endLine = startLine
+  if (hasShebang) {
+    startLine = 1
+    endLine = 1
+  }
 
   // find first line start
-  let foundStart = false
   for (let i = startLine; i < doc.lineCount; i++) {
     const lineProp = doc.lineAt(i)
     if (lineProp.isEmptyOrWhitespace) {
       continue
     }
-    // Check if line starts with firstLineSymbol (ignoring leading whitespace)
-    if (lineProp.text.trim().startsWith(firstLineSymbol.trim())) {
+    if (lineProp.text.startsWith(firstLineSymbol)) {
       startLine = i
-      startChar = lineProp.text.indexOf(firstLineSymbol.trim())
-      foundStart = true
+      startChar = lineProp.text.indexOf(firstLineSymbol)
       break // once found, break for loop
     }
   }
-
   // find last line, from the first line start line
-  if (foundStart) {
-    // Set initial end line to start line
-    endLine = startLine
-
-    // Continue searching until we find the end line or reach the end of file
-    for (let i = startLine + 1; i < doc.lineCount; i++) {
-      const lineProp = doc.lineAt(i)
-      const lineText = lineProp.text.trim()
-
-      // Check if this is the end line
-      if (lineText.endsWith(lastLineSymbol.trim())) {
-        endLine = i
-        endChar = lineProp.text.length
-        break
-      }
-      // Check if this is a middle line (part of the header)
-      else if (lineText.startsWith(middleLineSymbol.trim())) {
-        // This is part of the header, continue searching
-        endLine = i
-      }
-      // If it's neither, we've reached the end of the header
-      else {
-        break
-      }
+  for (let i = startLine; i < doc.lineCount; i++) {
+    const lineProp = doc.lineAt(i)
+    if (lineProp.isEmptyOrWhitespace) {
+      continue
     }
-
-    // Make sure we found the end line
-    if (endLine === startLine) {
-      // If end line not found, try to find any line with the end symbol
-      for (let i = startLine; i < doc.lineCount; i++) {
-        const lineProp = doc.lineAt(i)
-        if (lineProp.text.trim().endsWith(lastLineSymbol.trim())) {
-          endLine = i
-          endChar = lineProp.text.length
-          break
-        }
-      }
+    // i can't be the last line, and the following line must be empty or whitespace
+    if (lineProp.text.endsWith(lastLineSymbol)) {
+      endLine = i
+      endChar = lineProp.text.length
+      break
     }
-  }
-
-  // If no header comment found but has shebang, return range starting from line 1
-  if (!foundStart && hasShebang) {
-    return new vscode.Range(1, 0, 1, 0)
   }
 
   return new vscode.Range(startLine, startChar, endLine, endChar)
@@ -363,9 +329,7 @@ const addHeader = () => {
           customCommentElementsValue,
           oldCommentElementsValue
         )
-
-        logger.debug(`Line:${headerRange.start.line.toString()} -> ${headerRange.end.line.toString()}`)
-
+        logger.info(`${headerRange.start.line.toString()}  ${headerRange.end.line.toString()}`)
         editBuilder.replace(headerRange, headerText)
       } catch (e) {
         logger.error('', e)
@@ -374,4 +338,4 @@ const addHeader = () => {
   }
 }
 // const throttleAddHeader = throttle(addHeader, config.get('throttleTime', 60000), { leading: true, trailing: false })
-module.exports = { getHeaderRange, addHeader, buildLine, genNewHeader, getElementValue }  
+module.exports = { getHeaderRange, addHeader, buildLine, genNewHeader, getElementValue }
