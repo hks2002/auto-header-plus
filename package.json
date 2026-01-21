@@ -4,7 +4,7 @@
   "description": "Auto add header to a new file or existing file",
   "publisher": "MerBleueAviation",
   "license": "MIT",
-  "version": "1.6.0",
+  "version": "1.5.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/hks2002/auto-header-plus.git"
@@ -20,8 +20,7 @@
     "publish": "vsce publish --yarn --skip-duplicate",
     "package": "vsce package --yarn"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "@vscode/test-electron": "^2.5.2",
@@ -46,7 +45,9 @@
     "header",
     "comments"
   ],
-  "activationEvents": ["onStartupFinished"],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./dist/extension.js",
   "l10n": "./l10n",
   "contributes": {
