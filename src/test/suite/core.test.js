@@ -2,7 +2,7 @@
  * @Author                : Robert Huang<56649783@qq.com>                      *
  * @CreatedDate           : 2025-08-18 20:15:08                                *
  * @LastEditors           : Robert Huang<56649783@qq.com>                      *
- * @LastEditDate          : 2026-01-20 19:06:55                                *
+ * @LastEditDate          : 2026-01-21 09:43:02                                *
  * @FilePath              : auto-header-plus/src/test/suite/core.test.js       *
  * @CopyRight             : MerBleueAviation                                   *
  ******************************************************************************/
@@ -197,10 +197,10 @@ suite('🧪Header Test Suite', () => {
     console.log(header)
   })
 
-  test('getHeaderRange with shebang test', async () => {
+  test('getHeaderRange with shebang test 1', async () => {
     // Mock shell script style (similar to style.4 in package.json)
     const shellStyle = {
-      applyTo: "shell",
+      applyTo: "sh",
       firstLineStart: "####",
       firstLineMiddle: "",
       firstLineEnd: "",
@@ -228,6 +228,24 @@ echo "Hello World"`
 
     assert.strictEqual(range1.start.line, 1);
     assert.strictEqual(range1.start.character, 0);
+    vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+  })
+
+  test('getHeaderRange with shebang test 2', async () => {
+    // Mock shell script style (similar to style.4 in package.json)
+    const shellStyle = {
+      applyTo: "sh",
+      firstLineStart: "####",
+      firstLineMiddle: "",
+      firstLineEnd: "",
+      middleLineStart: "# ",
+      commentElementPrefix: "@",
+      commentElementSuffix: ": ",
+      middleLineEnd: "",
+      lastLineStart: "",
+      lastLineMiddle: "",
+      lastLineEnd: "####"
+    };
 
     // Test document with shebang and header comment
     const text2 = `#!/bin/bash
@@ -251,6 +269,25 @@ echo "Hello World"`
 
     assert.strictEqual(range2.start.line, 1);
     assert.strictEqual(range2.start.character, 0);
+
+    vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+  })
+
+  test('getHeaderRange with shebang test 3', async () => {
+    // Mock shell script style (similar to style.4 in package.json)
+    const shellStyle = {
+      applyTo: "sh",
+      firstLineStart: "####",
+      firstLineMiddle: "",
+      firstLineEnd: "",
+      middleLineStart: "# ",
+      commentElementPrefix: "@",
+      commentElementSuffix: ": ",
+      middleLineEnd: "",
+      lastLineStart: "",
+      lastLineMiddle: "",
+      lastLineEnd: "####"
+    };
 
     // Test document without shebang for comparison
     const text3 = `#######################
