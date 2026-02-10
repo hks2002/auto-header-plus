@@ -94,7 +94,7 @@
         "auto-header-plus.commandTimesOut": {
           "order": 5,
           "type": "integer",
-          "default": 3000,
+          "default": 5000,
           "maximum": 10000,
           "description": "%auto-header-plus.commandTimesOut%"
         },

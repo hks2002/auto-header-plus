@@ -2,17 +2,17 @@
  * @Author                : Robert Huang<56649783@qq.com>                      *
  * @CreatedDate           : 2023-02-07 15:29:47                                *
  * @LastEditors           : Robert Huang<56649783@qq.com>                      *
- * @LastEditDate          : 2026-01-20 16:45:18                                *
+ * @LastEditDate          : 2026-02-11 00:07:21                                *
  * @FilePath              : auto-header-plus/src/test/suite/utils.test.js      *
  * @CopyRight             : MerBleueAviation                                   *
  ******************************************************************************/
 const vscode = require('vscode')
 const assert = require('assert')
-const {suite, test, before} = require('mocha')
+const { suite, test, before } = require('mocha')
 const { executeCommand, getApplyStyle, getDateValue, getFinalString, getPathValue } = require('../../main/utils')
 const { formatDate } = require('../../main/utils')
+const config = require('../../main/config')
 
-let config
 let styleC
 let stylePy
 
@@ -22,16 +22,8 @@ suite('🧪Utils Test Suite', async () => {
     if (ext) {
       await ext.activate()
     }
-    config = vscode.workspace.getConfiguration('auto-header-plus')
-  
     styleC = config.style['0']
     stylePy = config.style['2']
-  })
-
-
-  test('executeCommand test', () => {
-    assert.strictEqual(executeCommand('echo TEST'), 'TEST')
-    assert.strictEqual(getFinalString('${echo TEST}'), 'TEST')
   })
 
   test('getApplyStyle test', () => {
@@ -60,5 +52,10 @@ suite('🧪Utils Test Suite', async () => {
     assert.strictEqual(getPathValue('FULL_PATH', vscode.Uri.file('C:/Untitled.js')), 'c:/Untitled.js')
     assert.strictEqual(getPathValue('RELATIVE_PATH', vscode.Uri.file('C:/Untitled.js')), 'c:/Untitled.js')
     assert.strictEqual(getPathValue('SHORTNAME_PATH', vscode.Uri.file('C:/Untitled.js')), 'Untitled.js')
+  })
+
+  test('executeCommand test', async () => {
+    assert.strictEqual(await executeCommand('echo TEST'), 'TEST')
+    assert.strictEqual(await getFinalString('${echo TEST}'), 'TEST')
   })
 })

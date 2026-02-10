@@ -1,55 +1,63 @@
-/******************************************************************************
- * @Author                : Robert Huang<56649783@qq.com>                     *
- * @CreatedDate           : 2025-08-19 11:11:56                               *
- * @LastEditors           : Robert Huang<56649783@qq.com>                     *
- * @LastEditDate          : 2026-01-19 16:07:41                               *
- * @FilePath              : auto-header-plus/src/main/utils.js                *
- * @CopyRight             : MerBleueAviation                                  *
- *****************************************************************************/
-
-
+/*******************************************************************************
+ * @Author                : Robert Huang<56649783@qq.com>                      *
+ * @CreatedDate           : 2025-08-19 11:11:56                                *
+ * @LastEditors           : Robert Huang<56649783@qq.com>                      *
+ * @LastEditDate          : 2026-02-11 01:13:41                                *
+ * @FilePath              : auto-header-plus/src/main/utils.js                 *
+ * @CopyRight             : MerBleueAviation                                   *
+ ******************************************************************************/
 const vscode = require('vscode')
 const path = require('path')
 const config = require('./config')
 const logger = require('./logger')
+const { exec } = require('child_process')
 
 const t = vscode.l10n.t
-const execSync = require('child_process').execSync
 
 /**
- * Run command and return result, if error, return empty string
+ * Run command asynchronously and return result, if error, return empty string
  * @param {string} cmdRaw
- * @returns
+ * @returns {Promise<string>}
  */
-const executeCommand = (cmdRaw) => {
-  let rst = ''
-  try {
-    rst = execSync(cmdRaw, {
-      timeout: config.get('commandTimesOut') || 3000
-    }).toString('utf8')
-  } catch (e) {
-    logger.error('', e)
-  }
 
-  if (rst.trim() === '') {
-    logger.warn(t('Command {0} return empty, probably is caused by system busy', cmdRaw))
-  }
-  return rst.trimEnd()
+const executeCommand = (cmdRaw) => {
+  return new Promise((resolve) => {
+    exec(
+      cmdRaw,
+      { timeout: config.get('commandTimesOut') || 5000 },
+      (e, stdout) => {
+        if (e) {
+          logger.error('', e)
+          return resolve('')
+        }
+
+        const rst = stdout.toString().trimEnd()
+        if (!rst) {
+          logger.warn(
+            t('Command {0} return empty, probably is caused by system busy', cmdRaw)
+          )
+        }
+        resolve(rst)
+      }
+    )
+  })
 }
 
 /**
  * Get final string result
  * If string contains command ${cmd}, will running it and get the running result
  * @param {string} str string contains command ${cmd} or not
+ * @returns {Promise<string>}
  */
-const getFinalString = (str) => {
+const getFinalString = async (str) => {
   const cmdReg = /\$\{(.+?)\}/g
   const cmds = str.match(cmdReg)
   let rtn = str
   if (cmds) {
     for (const cmd of cmds) {
       const cmdRaw = cmd.replace('${', '').replace('}', '')
-      rtn = rtn.replace(cmd, executeCommand(cmdRaw))
+      const cmdResult = await executeCommand(cmdRaw)
+      rtn = rtn.replace(cmd, cmdResult)
     }
   }
   return rtn
@@ -81,12 +89,12 @@ const getApplyStyle = (styles, ext) => {
   // only keep enabled style
   matchedStyle.filter((style) => style.enable)
   if (matchedStyle.length > 1) {
-    logger.warn(t('Ext {0} duplicated in config', ext))
+    logger.warn(t('Extension {0} duplicated in config', ext))
     return matchedStyle[0]
   } else if (matchedStyle.length === 1) {
     return matchedStyle[0]
   } else {
-    logger.info(t('Ext {0} not found in config', ext))
+    logger.warn(t('Extension {0} not found in config', ext))
     return undefined
   }
 }

@@ -2,7 +2,7 @@
  * @Author                : Robert Huang<56649783@qq.com>                      *
  * @CreatedDate           : 2025-08-19 23:31:28                                *
  * @LastEditors           : Robert Huang<56649783@qq.com>                      *
- * @LastEditDate          : 2026-01-21 09:33:50                                *
+ * @LastEditDate          : 2026-02-11 00:18:28                                *
  * @FilePath              : auto-header-plus/src/main/core.js                  *
  * @CopyRight             : MerBleueAviation                                   *
  ******************************************************************************/
@@ -41,7 +41,7 @@ const getHeaderRange = (doc, style) => {
   const extArr = style.applyTo.replace(/[,|;|、|:|.|/||]/g, ' ').split(' ')
   const isShellFile = extArr.includes("bash") || extArr.includes("sh")
   const hasShebang = isShellFile && doc.lineCount > 0 && doc.lineAt(0).text.startsWith("#!")
-  console.debug('hasShebang:', hasShebang)
+  //console.debug('hasShebang:', hasShebang)
 
   if (hasShebang) {
     startLine = 1
@@ -215,9 +215,9 @@ const buildLine = (s, m, e, width) => {
  * @param {Object} commentElementsValues
  * @param {Object} customCommentElementsValues
  * @param {Object} oldCommentElementsValues
- * @returns
+ * @returns {Promise<string>}
  */
-const genNewHeader = (
+const genNewHeader = async (
   doc,
   style,
   dateFormat,
@@ -250,7 +250,7 @@ const genNewHeader = (
     let elementValueText = ''
 
     if (elementValue) {
-      elementValueText = getFinalString(elementValue) || ''
+      elementValueText = await getFinalString(elementValue) || ''
       const ELEMENT_VALUE_TEXT = elementValueText.toUpperCase()
 
       SPEC_VALUE.includes(ELEMENT_VALUE_TEXT) && ELEMENT_VALUE_TEXT.endsWith('PATH')
@@ -282,7 +282,7 @@ const genNewHeader = (
   // additional comment
   const additionalComment = config.get('additionalComment', '')
   if (additionalComment.length > 0) {
-    const additionalCommentText = getFinalString(additionalComment) || ''
+    const additionalCommentText = await getFinalString(additionalComment) || ''
     splitString(additionalCommentText, style.lineWidth).forEach((line) => {
       headerText += buildLine(style.middleLineStart + line, ' ', style.middleLineEnd, style.lineWidth) + eolText
     })
@@ -294,47 +294,48 @@ const genNewHeader = (
   return headerText
 }
 
-const addHeader = () => {
+const addHeader = async () => {
   const editor = vscode.window.activeTextEditor
   if (editor) {
-    editor.edit((editBuilder) => {
-      try {
-        logger.info(t('Adding header to {0}', editor.document.fileName))
-        const ext = path.extname(editor.document.fileName)
+    try {
+      logger.info(t('Adding header to {0}', editor.document.fileName))
+      const ext = path.extname(editor.document.fileName)
 
-        const style = getApplyStyle(config.get('style'), ext)
-        if (!style) {
-          return
-        }
-        logger.debug(`style: ${JSON.stringify(style)}`)
-
-        const headerRange = getHeaderRange(editor.document, style)
-
-        const commentElements = config.get('commentElements', [])
-        const commentElementsValue = config.get('commentElementsValue', {})
-        const customCommentElementsValue = config.get('customCommentElementsValue', {})
-        const oldCommentElementsValue = {}
-        for (const element of commentElements) {
-          const elementValue = getElementValue(editor.document, headerRange, element)
-          oldCommentElementsValue[element] = elementValue
-        }
-        const dateFormate = config.get('dateFormate', 'YYYY-MM-DD HH:mm:ss')
-
-        let headerText = genNewHeader(
-          editor.document,
-          style,
-          dateFormate,
-          commentElements,
-          commentElementsValue,
-          customCommentElementsValue,
-          oldCommentElementsValue
-        )
-        logger.info(`${headerRange.start.line.toString()}  ${headerRange.end.line.toString()}`)
-        editBuilder.replace(headerRange, headerText)
-      } catch (e) {
-        logger.error('', e)
+      const style = getApplyStyle(config.get('style'), ext)
+      if (!style) {
+        return
       }
-    })
+      logger.debug(`style: ${JSON.stringify(style)}`)
+
+      const headerRange = getHeaderRange(editor.document, style)
+
+      const commentElements = config.get('commentElements', [])
+      const commentElementsValue = config.get('commentElementsValue', {})
+      const customCommentElementsValue = config.get('customCommentElementsValue', {})
+      const oldCommentElementsValue = {}
+      for (const element of commentElements) {
+        const elementValue = getElementValue(editor.document, headerRange, element)
+        oldCommentElementsValue[element] = elementValue
+      }
+      const dateFormate = config.get('dateFormate', 'YYYY-MM-DD HH:mm:ss')
+
+      const headerText = await genNewHeader(
+        editor.document,
+        style,
+        dateFormate,
+        commentElements,
+        commentElementsValue,
+        customCommentElementsValue,
+        oldCommentElementsValue
+      )
+      logger.info(`${headerRange.start.line.toString()}  ${headerRange.end.line.toString()}`)
+
+      editor.edit((editBuilder) => {
+        editBuilder.replace(headerRange, headerText)
+      })
+    } catch (e) {
+      logger.error('', e)
+    }
   }
 }
 // const throttleAddHeader = throttle(addHeader, config.get('throttleTime', 60000), { leading: true, trailing: false })

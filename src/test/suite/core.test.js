@@ -2,7 +2,7 @@
  * @Author                : Robert Huang<56649783@qq.com>                      *
  * @CreatedDate           : 2025-08-18 20:15:08                                *
  * @LastEditors           : Robert Huang<56649783@qq.com>                      *
- * @LastEditDate          : 2026-01-21 09:43:02                                *
+ * @LastEditDate          : 2026-02-11 01:34:30                                *
  * @FilePath              : auto-header-plus/src/test/suite/core.test.js       *
  * @CopyRight             : MerBleueAviation                                   *
  ******************************************************************************/
@@ -10,6 +10,8 @@ const vscode = require('vscode');
 const assert = require('assert');
 const { getHeaderRange, buildLine, getElementValue, genNewHeader } = require('../../main/core.js');
 const { suite, test, before } = require('mocha');
+const config = require('../../main/config')
+const logger = require('../../main/logger')
 
 let styleC;
 
@@ -19,14 +21,14 @@ suite('🧪Header Test Suite', () => {
     if (ext) {
       await ext.activate();
     }
-    const config = vscode.workspace.getConfiguration('auto-header-plus');
+
     styleC = config.style['0'];
   });
 
   test('getHeaderRange 1 test', async () => {
     const doc = await vscode.workspace.openTextDocument({ language: 'javascript', content: '' })
     const range = getHeaderRange(doc, styleC)
-    console.log(doc.getText(), range)
+    logger.info(doc.getText())
     vscode.commands.executeCommand('workbench.action.closeActiveEditor')
 
     assert.strictEqual(range.start.line, 0)
@@ -38,7 +40,7 @@ suite('🧪Header Test Suite', () => {
   test('getHeaderRange 2 test', async () => {
     const doc = await vscode.workspace.openTextDocument({ language: 'javascript', content: '/** balabala*/\r' })
     const range = getHeaderRange(doc, styleC)
-    console.log(doc.getText(), range)
+    logger.info(doc.getText())
     vscode.commands.executeCommand('workbench.action.closeActiveEditor')
 
     assert.strictEqual(range.start.line, 0)
@@ -50,7 +52,7 @@ suite('🧪Header Test Suite', () => {
   test('getHeaderRange 3 test', async () => {
     const doc = await vscode.workspace.openTextDocument({ language: 'javascript', content: '/** balabala */\r' })
     const range = getHeaderRange(doc, styleC)
-    console.log(doc.getText(), range)
+    logger.info(doc.getText())
     vscode.commands.executeCommand('workbench.action.closeActiveEditor')
 
     assert.strictEqual(range.start.line, 0)
@@ -65,7 +67,7 @@ suite('🧪Header Test Suite', () => {
       content: '/** balabala \r balabala \r**/\r'
     })
     const range = getHeaderRange(doc, styleC)
-    console.log(doc.getText(), range)
+    logger.info(doc.getText())
     vscode.commands.executeCommand('workbench.action.closeActiveEditor')
 
     assert.strictEqual(range.start.line, 0)
@@ -80,7 +82,7 @@ suite('🧪Header Test Suite', () => {
       content: '/** balabala \r balabala \r **/\r'
     })
     const range = getHeaderRange(doc, styleC)
-    console.log(doc.getText(), range)
+    logger.info(doc.getText())
     vscode.commands.executeCommand('workbench.action.closeActiveEditor')
 
     assert.strictEqual(range.start.line, 0)
@@ -95,7 +97,7 @@ suite('🧪Header Test Suite', () => {
       content: '/** balabala \r balabala \r **/\r balabala \r'
     })
     const range = getHeaderRange(doc, styleC)
-    console.log(doc.getText(), range)
+    logger.info(doc.getText())
     vscode.commands.executeCommand('workbench.action.closeActiveEditor')
 
     assert.strictEqual(range.start.line, 0)
@@ -110,7 +112,7 @@ suite('🧪Header Test Suite', () => {
       content: '/** balabala \r balabala \r **/\r \r balabala \r'
     })
     const range = getHeaderRange(doc, styleC)
-    console.log(doc.getText(), range)
+    logger.info(doc.getText())
     vscode.commands.executeCommand('workbench.action.closeActiveEditor')
 
     assert.strictEqual(range.start.line, 0)
@@ -138,7 +140,7 @@ suite('🧪Header Test Suite', () => {
       content: `/**\r * ${element} Auto Header Plus \r **/\r \r`
     })
     const range = getHeaderRange(doc, styleC)
-    console.log(doc.getText(), range)
+    logger.info(doc.getText())
     vscode.commands.executeCommand('workbench.action.closeActiveEditor')
 
     const val = getElementValue(doc, range, 'Author')
@@ -153,12 +155,13 @@ suite('🧪Header Test Suite', () => {
       content: `/**\r * ${element} Auto Header Plus \r **/\r \r`
     })
     const range = getHeaderRange(doc, styleC)
-    console.log(doc.getText(), range)
+    logger.info(doc.getText())
     vscode.commands.executeCommand('workbench.action.closeActiveEditor')
 
     const val = getElementValue(doc, range, 'Author')
     assert.strictEqual(val, 'Auto Header Plus')
   })
+
   test('getElementValue 3 test', async () => {
     // @Author Auto Header Plus
     const element = buildLine('@Author', '', '', styleC.commentElementWidth)
@@ -167,7 +170,7 @@ suite('🧪Header Test Suite', () => {
       content: `/**\r * ${element} Auto Header Plus \r **/\r \r`
     })
     const range = getHeaderRange(doc, styleC)
-    console.log(doc.getText(), range)
+    logger.info(doc.getText())
     vscode.commands.executeCommand('workbench.action.closeActiveEditor')
 
     const val = getElementValue(doc, range, 'Author')
@@ -177,7 +180,7 @@ suite('🧪Header Test Suite', () => {
   test('genHeader test', async () => {
     const doc = await vscode.workspace.openTextDocument({ language: 'javascript', content: '' })
     vscode.commands.executeCommand('workbench.action.closeActiveEditor')
-    const header = genNewHeader(
+    const header = await genNewHeader(
       doc,
       styleC,
       'YYYY-MM-DD HH:mm:ss',
@@ -194,7 +197,7 @@ suite('🧪Header Test Suite', () => {
       {}
     )
 
-    console.log(header)
+    logger.info(header)
   })
 
   test('getHeaderRange with shebang test 1', async () => {
@@ -224,7 +227,7 @@ echo "Hello World"`
     });
 
     const range1 = getHeaderRange(doc1, shellStyle);
-    console.log('Range with shebang:', text1, range1);
+    console.log('Range with shebang:\n', text1);
 
     assert.strictEqual(range1.start.line, 1);
     assert.strictEqual(range1.start.character, 0);
@@ -265,7 +268,7 @@ echo "Hello World"`
     });
 
     const range2 = getHeaderRange(doc2, shellStyle);
-    console.log('Range with shebang:', text2, range2);
+    console.log('Range with shebang:\n', text2);
 
     assert.strictEqual(range2.start.line, 1);
     assert.strictEqual(range2.start.character, 0);
@@ -306,7 +309,7 @@ echo "Hello World"`
     });
 
     const range3 = getHeaderRange(doc3, shellStyle);
-    console.log('Range without shebang:', text3, range3);
+    console.log('Range without shebang:\n', text3);
 
     assert.strictEqual(range3.start.line, 0);
     assert.strictEqual(range3.start.character, 0);
