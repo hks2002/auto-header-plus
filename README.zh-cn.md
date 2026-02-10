@@ -9,7 +9,7 @@
 
 # Auto Header
 
-![Logo](https://github.com/hks2002/auto-header-plus/raw/master/images/icon.png)
+![Logo](./images/icon.png)
 
 ![Github Version](https://img.shields.io/github/package-json/v/hks2002/auto-header-plus)
 ![Github Build Status](https://img.shields.io/github/actions/workflow/status/hks2002/auto-header-plus/Build.yml)
@@ -104,7 +104,7 @@
 - 支持`命令行`结果和特殊值`MODIFIED_DATE`, `CREATED_DATE`, `FULL_PATH`, `RELATIVE_PATH`, `SHORTNAME_PATH`作为注释元素的值，如: `git config user.name`，`git config user.email`， `cat license.md`。
 
 - 配置方便，可以直接在 UI 界面配置，也可以在`settings.json`中配置。
-  ![ui.zh-cn](https://github.com/hks2002/auto-header-plus/raw/master/images/ui.zh-cn.png)
+  ![ui.zh-cn](./images/ui.zh-cn.png)
 
 通过配置，可以实现以下效果：
 

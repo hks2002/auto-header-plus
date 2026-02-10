@@ -104,7 +104,7 @@ This extension let you automatically add a header to the top of the current file
 - Support set comment element value to `Command` result: `git config user.name`，`git config user.email`， `cat license.md`， or special value: `MODIFIED_DATE`, `CREATED_DATE`, `FULL_PATH`, `RELATIVE_PATH`, `SHORTNAME_PATH`。
 
 - Easy configuration, you can set them in the settings UI or `settings.json`。
-  ![ui](https://github.com/hks2002/auto-header-plus/raw/master/images/ui.png)
+  ![ui](./images/ui.png)
 
   It can achieve the following effects after configure:
 
