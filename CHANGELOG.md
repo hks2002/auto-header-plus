@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.2](https://github.com/hks2002/auto-header-plus/compare/v1.5.1...v1.5.2) (2026-02-10)
+
+
+### Bug Fixes
+
+* 🐛 fix command result empty ([b918f91](https://github.com/hks2002/auto-header-plus/commit/b918f91fd89b4ca07b0ff188162feee504b05f40))
+
 ## [1.5.1](https://github.com/hks2002/auto-header-plus/compare/v1.5.0...v1.5.1) (2026-01-21)
 
 
