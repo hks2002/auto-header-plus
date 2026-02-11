@@ -5,7 +5,7 @@
 
 ### Features
 
-* ✨add commandTimesout setting ([eb7da7a](https://github.com/hks2002/auto-header-plus/commit/eb7da7a9de39e61b112bf37a60d5829ab22acb16))
+* ✨add command Timesout setting ([eb7da7a](https://github.com/hks2002/auto-header-plus/commit/eb7da7a9de39e61b112bf37a60d5829ab22acb16))
 * ✨add pathContainsWorkspaceFolder setting ([9bab7bf](https://github.com/hks2002/auto-header-plus/commit/9bab7bfef6bad99d622bb7e0c62fa2164c5cfaba))
 * ✨allow vsce duplicate publish ([33466cc](https://github.com/hks2002/auto-header-plus/commit/33466cc677e8f1d5fae4361b66c70ca061e38e69))
 * ✨clean source ([9c6f15b](https://github.com/hks2002/auto-header-plus/commit/9c6f15b8313ae5f08461a92836a08158555060d8))
