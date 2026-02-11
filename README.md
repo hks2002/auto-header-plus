@@ -6,7 +6,6 @@
 * @FilePath              : auto-header-plus/README.md
 * @CopyRight             : MerBleueAviation
 -->
-
 # Auto Header
 
 ![Logo](https://github.com/hks2002/auto-header-plus/raw/master/images/icon.png)
