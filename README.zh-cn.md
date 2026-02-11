@@ -6,7 +6,6 @@
 * @FilePath              : auto-header-plus/README.zh-cn.md
 * @CopyRight             : MerBleueAviation
 -->
-
 # Auto Header
 
 ![Logo](./images/icon.png)
@@ -225,8 +224,8 @@ import packageJson from '../package.json'
 
 扩展提供了如下命令: `Add Header`，可以通过快捷键调用, 快捷键:
 
-- win: `ctrl+alt+h`
-- mac: `cmd+alt+h`
-- linux: `ctrl+alt+h`
+- win: `ctrl+win+h`
+- mac: `ctrl+cmd+h`
+- linux: `ctrl+win+h`
 
 **欢迎使用!**

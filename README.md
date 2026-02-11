@@ -6,7 +6,6 @@
 * @FilePath              : auto-header-plus/README.md
 * @CopyRight             : MerBleueAviation
 -->
-
 # Auto Header
 
 ![Logo](https://github.com/hks2002/auto-header-plus/raw/master/images/icon.png)
@@ -199,8 +198,8 @@ If you need to add a new comment style, you can add a new style in `style`:
 This extension contributes the command: `Add Header` to the Command Palette.
 bind key:
 
-- win: `ctrl+alt+h`
-- mac: `cmd+alt+h`
-- linux: `ctrl+alt+h`
+- win: `ctrl+win+h`
+- mac: `ctrl+cmd+h`
+- linux: `ctrl+win+h`
 
 **Enjoy!**
