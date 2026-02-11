@@ -861,7 +861,7 @@
         "command": "auto-header-plus.addHeader",
         "key": "ctrl+win+h",
         "mac": "ctrl+cmd+h",
-        "linux": "ctrl+meta+h",
+        "linux": "ctrl+win+h",
         "when": "editorTextFocus"
       }
     ]

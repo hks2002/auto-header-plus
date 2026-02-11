@@ -198,8 +198,8 @@ If you need to add a new comment style, you can add a new style in `style`:
 This extension contributes the command: `Add Header` to the Command Palette.
 bind key:
 
-- win: `ctrl+alt+h`
-- mac: `cmd+alt+h`
-- linux: `ctrl+alt+h`
+- win: `ctrl+win+h`
+- mac: `ctrl+cmd+h`
+- linux: `ctrl+win+h`
 
 **Enjoy!**
