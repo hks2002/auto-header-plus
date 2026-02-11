@@ -2,7 +2,7 @@
  * @Author                : Robert Huang<56649783@qq.com>                      *
  * @CreatedDate           : 2025-08-19 11:11:56                                *
  * @LastEditors           : Robert Huang<56649783@qq.com>                      *
- * @LastEditDate          : 2026-02-11 01:13:41                                *
+ * @LastEditDate          : 2026-02-12 01:39:43                                *
  * @FilePath              : auto-header-plus/src/main/utils.js                 *
  * @CopyRight             : MerBleueAviation                                   *
  ******************************************************************************/
@@ -94,7 +94,7 @@ const getApplyStyle = (styles, ext) => {
   } else if (matchedStyle.length === 1) {
     return matchedStyle[0]
   } else {
-    logger.warn(t('Extension {0} not found in config', ext))
+    logger.info(t('Extension {0} not found in config', ext))
     return undefined
   }
 }
