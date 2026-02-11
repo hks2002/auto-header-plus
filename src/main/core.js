@@ -333,8 +333,10 @@ const addHeader = async () => {
       editor.edit((editBuilder) => {
         editBuilder.replace(headerRange, headerText)
       })
+      return true
     } catch (e) {
       logger.error('', e)
+      return false
     }
   }
 }

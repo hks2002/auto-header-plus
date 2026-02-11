@@ -2,7 +2,7 @@
  * @Author                : Robert Huang<56649783@qq.com>                      *
  * @CreatedDate           : 2025-08-19 12:00:23                                *
  * @LastEditors           : Robert Huang<56649783@qq.com>                      *
- * @LastEditDate          : 2026-01-20 19:07:59                                *
+ * @LastEditDate          : 2026-02-12 00:08:55                                *
  * @FilePath              : auto-header-plus/src/main/saveHandler.js           *
  * @CopyRight             : MerBleueAviation                                   *
  ******************************************************************************/
@@ -19,13 +19,16 @@ const t = vscode.l10n.t
  */
 const saveHandler = (e) => {
   // Check if auto add on save is enabled in configuration
-  if (config.get('enableAutoAddOnSave')) {
-    // If document has unsaved changes, add header
-    e.document.isDirty ? addHeader() : logger.info(t('File not changed'))
-  } else {
+  if (!config.get('enableAutoAddOnSave')) {
     // Log message if auto add on save is disabled
     logger.info(t('Auto add on save is disabled'))
+    return
   }
-} 
+
+  const editPromise = addHeader()
+  if (editPromise) {
+    e.waitUntil(Promise.resolve(editPromise))
+  }
+}
 
 module.exports = saveHandler
