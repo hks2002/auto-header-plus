@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1](https://github.com/hks2002/auto-header-plus/compare/v1.6.0...v1.6.1) (2026-02-11)
+
+
+### Bug Fixes
+
+* 🐛fix the version bugs ([7af522a](https://github.com/hks2002/auto-header-plus/commit/7af522a7611035fadba428db4bb401fe030cab08))
+
 ## [1.6.0](https://github.com/hks2002/auto-header-plus/compare/v1.5.2...v1.6.0) (2026-02-11)
 
 

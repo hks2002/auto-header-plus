@@ -4,7 +4,7 @@
   "description": "Auto add header to a new file or existing file",
   "publisher": "MerBleueAviation",
   "license": "MIT",
-  "version": "1.6.2",
+  "version": "1.6.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/hks2002/auto-header-plus.git"
