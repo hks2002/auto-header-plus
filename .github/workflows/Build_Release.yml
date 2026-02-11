@@ -29,9 +29,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 22.x
+          cache: yarn
 
       - name: Install dependencies
-        run: yarn
+        run: yarn install --frozen-lockfile --prefer-offline
 
       - name: Run testing
         run: yarn test
