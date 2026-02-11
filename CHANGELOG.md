@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/hks2002/auto-header-plus/compare/v1.5.2...v1.6.0) (2026-02-11)
+
+
+### Features
+
+* ✨do add header before save ([2d73caa](https://github.com/hks2002/auto-header-plus/commit/2d73caa805be9db1ab9ee9ea79936016ce8b17d8))
+
 ## [1.5.2](https://github.com/hks2002/auto-header-plus/compare/v1.5.1...v1.5.2) (2026-02-10)
 
 
