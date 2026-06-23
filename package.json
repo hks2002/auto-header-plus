@@ -23,6 +23,7 @@
   "scripts": {
     "lint": "oxlint",
     "fmt": "oxfmt --write",
+    "cspell": "cspell .",
     "build": "node esbuild.js",
     "dev": "node esbuild.js --watch",
     "pretest": "pnpm run lint && pnpm run build",
@@ -40,7 +41,6 @@
     "cspell": "^9.6.0",
     "esbuild": "^0.28.1",
     "fast-glob": "3.3.3",
-    "globals": "^17.0.0",
     "mocha": "^10.1.0",
     "oxfmt": "^0.56.0",
     "oxlint": "^1.71.0"

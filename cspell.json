@@ -12,6 +12,7 @@
   ],
   "ignorePaths": [
     "node_modules",
+    "pnpm-lock.yaml",
     "/cspell.words.txt",
     "/.gitignore"
   ],
