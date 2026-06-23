@@ -2,7 +2,9 @@
 	// See https://go.microsoft.com/fwlink/?LinkId=733558
 	// for the documentation about the extensions.json format
 	"recommendations": [
-		"dbaeumer.vscode-eslint",
-		"streetsidesoftware.code-spell-checker-cspell-bundled-dictionaries"
+		"streetsidesoftware.code-spell-checker",
+		"merbleueaviation.emoji-commit-tiny",
+		"merbleueaviation.auto-header-plus",		
+		"oxc.oxc-vscode",
 	]
 }
