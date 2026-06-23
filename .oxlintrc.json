@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "style": "off",
+    "perf": "off",
+    "pedantic": "off",
+    "restriction": "off",
+    "nursery": "off"
+  },
+  "rules": {
+    "no-underscore-dangle": "off",
+    "no-unused-vars": "warn",
+    "prefer-const": "warn",
+    "no-var": "warn"
+  },
+  "ignorePatterns": ["node_modules/**", "dist/**", ".vscode-test/**"]
+}

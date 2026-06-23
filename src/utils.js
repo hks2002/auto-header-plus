@@ -2,44 +2,36 @@
  * @Author                : Robert Huang<56649783@qq.com>                      *
  * @CreatedDate           : 2025-08-19 11:11:56                                *
  * @LastEditors           : Robert Huang<56649783@qq.com>                      *
- * @LastEditDate          : 2026-02-12 01:39:43                                *
- * @FilePath              : auto-header-plus/src/main/utils.js                 *
+ * @LastEditDate          : 2026-06-23 20:02:45                                *
+ * @FilePath              : auto-header-plus/src/utils.js                      *
  * @CopyRight             : MerBleueAviation                                   *
  ******************************************************************************/
-const vscode = require('vscode')
-const path = require('path')
-const config = require('./config')
-const logger = require('./logger')
-const { exec } = require('child_process')
-
-const t = vscode.l10n.t
+import * as vscode from 'vscode'
+import * as path from 'path'
+import { logger } from './logger.js'
+import { exec } from 'child_process'
+import { config } from './config.js'
+import { getL10n } from './l10n.js'
 
 /**
  * Run command asynchronously and return result, if error, return empty string
  * @param {string} cmdRaw
  * @returns {Promise<string>}
  */
-
 const executeCommand = (cmdRaw) => {
   return new Promise((resolve) => {
-    exec(
-      cmdRaw,
-      { timeout: config.get('commandTimesOut') || 5000 },
-      (e, stdout) => {
-        if (e) {
-          logger.error('', e)
-          return resolve('')
-        }
-
-        const rst = stdout.toString().trimEnd()
-        if (!rst) {
-          logger.warn(
-            t('Command {0} return empty, probably is caused by system busy', cmdRaw)
-          )
-        }
-        resolve(rst)
+    exec(cmdRaw, { timeout: config.get('commandTimesOut') || 5000 }, (e, stdout) => {
+      if (e) {
+        logger.error('', e)
+        return resolve('')
       }
-    )
+
+      const rst = stdout.toString().trimEnd()
+      if (!rst) {
+        logger.warn(getL10n('Command {0} return empty, probably is caused by system busy', cmdRaw))
+      }
+      resolve(rst)
+    })
   })
 }
 
@@ -81,6 +73,7 @@ const getApplyStyle = (styles, ext) => {
 
     const extArr = applyTo.replace(/[,|;|、|:|.|/||]/g, ' ').split(' ')
 
+    // oxlint-disable-next-line no-unused-expressions
     extArr.includes(ext.replace('.', '').toLowerCase()) && isStyleValid(key, styles[key])
       ? matchedStyle.push(styles[key])
       : null
@@ -89,12 +82,12 @@ const getApplyStyle = (styles, ext) => {
   // only keep enabled style
   matchedStyle.filter((style) => style.enable)
   if (matchedStyle.length > 1) {
-    logger.warn(t('Extension {0} duplicated in config', ext))
+    logger.warn(getL10n('Extension {0} duplicated in config', ext))
     return matchedStyle[0]
   } else if (matchedStyle.length === 1) {
     return matchedStyle[0]
   } else {
-    logger.info(t('Extension {0} not found in config', ext))
+    logger.info(getL10n('Extension {0} not found in config', ext))
     return undefined
   }
 }
@@ -114,7 +107,10 @@ const isStyleValid = (key, style) => {
 
   const firstLineSymbol = style.firstLineStart + style.firstLineMiddle + style.firstLineEnd
   const middleLineSymbol =
-    style.middleLineStart + style.commentElementPrefix + style.commentElementSuffix + style.middleLineEnd
+    style.middleLineStart +
+    style.commentElementPrefix +
+    style.commentElementSuffix +
+    style.middleLineEnd
   const lastLineSymbol = style.lastLineStart + style.lastLineMiddle + style.lastLineEnd
   let isFirstLineSymbolValid = true
   let isMiddleLineSymbolValid = true
@@ -125,53 +121,102 @@ const isStyleValid = (key, style) => {
       isFirstLineSymbolValid = firstLineSymbol.includes('/*') && !firstLineSymbol.includes('*/')
       isMiddleLineSymbolValid = !middleLineSymbol.includes('*/')
       isLastLineSymbolValid = lastLineSymbol.includes('*/')
-      isFirstLineSymbolValid ? null : logger.warn(t('Style {0} {1} line error: {2} {3}', key, 'first', '/*', '*/'))
-      isMiddleLineSymbolValid ? null : logger.warn(t('Style {0} {1} line error: {2} {3}', key, 'middle', '', '*/'))
-      isLastLineSymbolValid ? null : logger.warn(t('Style {0} {1} line error: {2} {3}', key, 'last', '', '*/'))
+      // oxlint-disable-next-line no-unused-expressions
+      isFirstLineSymbolValid
+        ? null
+        : logger.warn(getL10n('Style {0} {1} line error: {2} {3}', key, 'first', '/*', '*/'))
+      // oxlint-disable-next-line no-unused-expressions
+      isMiddleLineSymbolValid
+        ? null
+        : logger.warn(getL10n('Style {0} {1} line error: {2} {3}', key, 'middle', '', '*/'))
+      // oxlint-disable-next-line no-unused-expressions
+      isLastLineSymbolValid
+        ? null
+        : logger.warn(getL10n('Style {0} {1} line error: {2} {3}', key, 'last', '', '*/'))
       return isFirstLineSymbolValid && isMiddleLineSymbolValid && isLastLineSymbolValid
     }
     case '1': {
       isFirstLineSymbolValid = firstLineSymbol.includes('<!--') && !firstLineSymbol.includes('-->')
       isMiddleLineSymbolValid = !middleLineSymbol.includes('-->')
       isLastLineSymbolValid = lastLineSymbol.includes('-->')
-      isFirstLineSymbolValid ? null : logger.warn(t('Style {0} {1} line error: {2} {3}', key, 'first', '<!--', '-->'))
-      isMiddleLineSymbolValid ? null : logger.warn(t('Style {0} {1} line error: {2} {3}', key, 'middle', '', '-->'))
-      isLastLineSymbolValid ? null : logger.warn(t('Style {0} {1} line error: {2} {3}', key, 'last', '', '-->'))
+      // oxlint-disable-next-line no-unused-expressions
+      isFirstLineSymbolValid
+        ? null
+        : logger.warn(getL10n('Style {0} {1} line error: {2} {3}', key, 'first', '<!--', '-->'))
+      // oxlint-disable-next-line no-unused-expressions
+      isMiddleLineSymbolValid
+        ? null
+        : logger.warn(getL10n('Style {0} {1} line error: {2} {3}', key, 'middle', '', '-->'))
+      // oxlint-disable-next-line no-unused-expressions
+      isLastLineSymbolValid
+        ? null
+        : logger.warn(getL10n('Style {0} {1} line error: {2} {3}', key, 'last', '', '-->'))
       return isFirstLineSymbolValid && isMiddleLineSymbolValid && isLastLineSymbolValid
     }
     case '2': {
       isFirstLineSymbolValid = firstLineSymbol.includes("'''")
       isLastLineSymbolValid = lastLineSymbol.includes("'''")
-      isFirstLineSymbolValid ? null : logger.warn(t('Style {0} {1} line error: {2} {3}', key, 'first', "'''"))
-      isLastLineSymbolValid ? null : logger.warn(t('Style {0} {1} line error: {2} {3}', key, 'last', "'''"))
+      // oxlint-disable-next-line no-unused-expressions
+      isFirstLineSymbolValid
+        ? null
+        : logger.warn(getL10n('Style {0} {1} line error: {2} {3}', key, 'first', "'''"))
+      // oxlint-disable-next-line no-unused-expressions
+      isLastLineSymbolValid
+        ? null
+        : logger.warn(getL10n('Style {0} {1} line error: {2} {3}', key, 'last', "'''"))
       return isFirstLineSymbolValid && isLastLineSymbolValid
     }
     case '3': {
       isFirstLineSymbolValid = firstLineSymbol.includes("'")
       isMiddleLineSymbolValid = middleLineSymbol.includes("'")
       isLastLineSymbolValid = lastLineSymbol.includes("'")
-      isFirstLineSymbolValid ? null : logger.warn(t('Style {0} {1} line error: {2} {3}', key, 'first', "'"))
-      isMiddleLineSymbolValid ? null : logger.warn(t('Style {0} {1} line error: {2} {3}', key, 'middle', "'"))
-      isLastLineSymbolValid ? null : logger.warn(t('Style {0} {1} line error: {2} {3}', key, 'last', "'"))
+      // oxlint-disable-next-line no-unused-expressions
+      isFirstLineSymbolValid
+        ? null
+        : logger.warn(getL10n('Style {0} {1} line error: {2} {3}', key, 'first', "'"))
+      // oxlint-disable-next-line no-unused-expressions
+      isMiddleLineSymbolValid
+        ? null
+        : logger.warn(getL10n('Style {0} {1} line error: {2} {3}', key, 'middle', "'"))
+      // oxlint-disable-next-line no-unused-expressions
+      isLastLineSymbolValid
+        ? null
+        : logger.warn(getL10n('Style {0} {1} line error: {2} {3}', key, 'last', "'"))
       return isFirstLineSymbolValid && isMiddleLineSymbolValid && isLastLineSymbolValid
     }
     case '4': {
       isFirstLineSymbolValid = firstLineSymbol.includes('#')
       isLastLineSymbolValid = lastLineSymbol.includes('#')
-      isFirstLineSymbolValid ? null : logger.warn(t('Style {0} {1} line error: {2} {3}', key, 'first', '#'))
-      isLastLineSymbolValid ? null : logger.warn(t('Style {0} {1} line error: {2} {3}', key, 'last', '#'))
+      // oxlint-disable-next-line no-unused-expressions
+      isFirstLineSymbolValid
+        ? null
+        : logger.warn(getL10n('Style {0} {1} line error: {2} {3}', key, 'first', '#'))
+      // oxlint-disable-next-line no-unused-expressions
+      isLastLineSymbolValid
+        ? null
+        : logger.warn(getL10n('Style {0} {1} line error: {2} {3}', key, 'last', '#'))
       return isFirstLineSymbolValid && isLastLineSymbolValid
     }
     case '5': {
       isFirstLineSymbolValid = firstLineSymbol.includes('--[[')
       isLastLineSymbolValid = lastLineSymbol.includes('--]]')
-      isFirstLineSymbolValid ? null : logger.warn(t('Style {0} {1} line error: {2} {3}', key, 'first', '--[['))
-      isLastLineSymbolValid ? null : logger.warn(t('Style {0} {1} line error: {2} {3}', key, 'last', '--]]'))
+      // oxlint-disable-next-line no-unused-expressions
+      isFirstLineSymbolValid
+        ? null
+        : logger.warn(getL10n('Style {0} {1} line error: {2} {3}', key, 'first', '--[['))
+      // oxlint-disable-next-line no-unused-expressions
+      isLastLineSymbolValid
+        ? null
+        : logger.warn(getL10n('Style {0} {1} line error: {2} {3}', key, 'last', '--]]'))
       return isFirstLineSymbolValid && isLastLineSymbolValid
     }
     default:
       return false
   }
+}
+
+function pad(n) {
+  return String(n).padStart(2, '0')
 }
 
 /**
@@ -189,18 +234,16 @@ function formatDate(date, fmt) {
   date = date || new Date()
   fmt = fmt || 'YYYY-MM-DD HH:mm:ss'
 
-  const pad = n => String(n).padStart(2, '0')
-
   const map = {
     YYYY: String(date.getFullYear()),
     MM: pad(date.getMonth() + 1),
     DD: pad(date.getDate()),
     HH: pad(date.getHours()),
     mm: pad(date.getMinutes()),
-    ss: pad(date.getSeconds())
+    ss: pad(date.getSeconds()),
   }
 
-  return fmt.replace(/YYYY|MM|DD|HH|mm|ss/g, m => map[m])
+  return fmt.replace(/YYYY|MM|DD|HH|mm|ss/g, (m) => map[m])
 }
 
 /**
@@ -217,9 +260,7 @@ const getDateValue = (key, fmt, oriVal) => {
     case 'MODIFIED_DATE':
       return formatDate(new Date(), format)
     case 'CREATED_DATE':
-      return oriVal
-        ? formatDate(new Date(oriVal), format)
-        : formatDate(new Date(), format)
+      return oriVal ? formatDate(new Date(oriVal), format) : formatDate(new Date(), format)
     default:
       return ''
   }
@@ -303,12 +344,12 @@ const splitString = (str, width) => {
   return arr
 }
 
-module.exports = {
+export {
   executeCommand,
   getApplyStyle,
   getFinalString,
   getDateValue,
   getPathValue,
   splitString,
-  formatDate
+  formatDate,
 }

@@ -9,33 +9,6 @@
     "type": "git",
     "url": "https://github.com/hks2002/auto-header-plus.git"
   },
-  "scripts": {
-    "compile": "cspell . && node esbuild.config.js",
-    "watch": "node esbuild.config.js --watch",
-    "lint": "eslint src --ext js",
-    "spell-check": "cspell .",
-    "pretest": "yarn run compile && yarn run lint",
-    "test": "node ./src/test/runTest.js",
-    "vscode:prepublish": "yarn run compile",
-    "publish": "vsce publish --yarn --skip-duplicate",
-    "package": "vsce package --yarn"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "@eslint/js": "^9.39.2",
-    "@vscode/test-electron": "^2.5.2",
-    "@vscode/vsce": "^3.7.1",
-    "cspell": "^9.6.0",
-    "esbuild": "^0.27.2",
-    "eslint": "^9.39.2",
-    "glob": "^11.0.3",
-    "globals": "^17.0.0",
-    "mocha": "^11.7.1"
-  },
-  "icon": "images/icon.png",
-  "engines": {
-    "vscode": "^1.75.0"
-  },
   "categories": [
     "Other"
   ],
@@ -45,10 +18,40 @@
     "header",
     "comments"
   ],
+  "type": "module",
+  "main": "./dist/extension.js",
+  "scripts": {
+    "lint": "oxlint",
+    "fmt": "oxfmt --write",
+    "build": "node esbuild.js",
+    "dev": "node esbuild.js --watch",
+    "pretest": "pnpm run lint && pnpm run build",
+    "test": "node ./test/runTest.js",
+    "vscode:prepublish": "pnpm run build",
+    "publish": "vsce publish --skip-duplicate --no-dependencies",
+    "package": "vsce package --no-dependencies"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/vscode": "^1.100.0",
+    "@vscode/l10n-dev": "^0.0.18",
+    "@vscode/test-electron": "^3.0.0",
+    "@vscode/vsce": "^3.9.2",
+    "cspell": "^9.6.0",
+    "esbuild": "^0.28.1",
+    "fast-glob": "3.3.3",
+    "globals": "^17.0.0",
+    "mocha": "^10.1.0",
+    "oxfmt": "^0.56.0",
+    "oxlint": "^1.71.0"
+  },
+  "icon": "images/icon.png",
+  "engines": {
+    "vscode": "^1.100.0"
+  },
   "activationEvents": [
     "onStartupFinished"
   ],
-  "main": "./dist/extension.js",
   "l10n": "./l10n",
   "contributes": {
     "commands": [

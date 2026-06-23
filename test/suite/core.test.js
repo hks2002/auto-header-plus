@@ -2,28 +2,29 @@
  * @Author                : Robert Huang<56649783@qq.com>                      *
  * @CreatedDate           : 2025-08-18 20:15:08                                *
  * @LastEditors           : Robert Huang<56649783@qq.com>                      *
- * @LastEditDate          : 2026-02-11 01:34:30                                *
- * @FilePath              : auto-header-plus/src/test/suite/core.test.js       *
+ * @LastEditDate          : 2026-06-23 19:52:57                                *
+ * @FilePath              : auto-header-plus/test/suite/core.test.js           *
  * @CopyRight             : MerBleueAviation                                   *
  ******************************************************************************/
-const vscode = require('vscode');
-const assert = require('assert');
-const { getHeaderRange, buildLine, getElementValue, genNewHeader } = require('../../main/core.js');
-const { suite, test, before } = require('mocha');
-const config = require('../../main/config')
-const logger = require('../../main/logger')
+import * as vscode from 'vscode'
+import * as assert from 'assert'
+import { getHeaderRange, buildLine, getElementValue, genNewHeader } from '../../src/core.js'
+import { suite, test, before } from 'mocha'
+import { config } from '../../src/config.js'
+import { logger } from '../../src/logger.js'
+import packageJson from '../../package.json' with { type: 'json' }
 
-let styleC;
+let styleC
 
 suite('🧪Header Test Suite', () => {
   before(async () => {
-    const ext = vscode.extensions.getExtension('MerBleueAviation.auto-header-plus');
+    const ext = vscode.extensions.getExtension(`${packageJson.publisher}.${packageJson.name}`)
     if (ext) {
-      await ext.activate();
+      await ext.activate()
     }
 
-    styleC = config.style['0'];
-  });
+    styleC = config.style['0']
+  })
 
   test('getHeaderRange 1 test', async () => {
     const doc = await vscode.workspace.openTextDocument({ language: 'javascript', content: '' })
@@ -38,7 +39,10 @@ suite('🧪Header Test Suite', () => {
   })
 
   test('getHeaderRange 2 test', async () => {
-    const doc = await vscode.workspace.openTextDocument({ language: 'javascript', content: '/** balabala*/\r' })
+    const doc = await vscode.workspace.openTextDocument({
+      language: 'javascript',
+      content: '/** balabala*/\r',
+    })
     const range = getHeaderRange(doc, styleC)
     logger.info(doc.getText())
     vscode.commands.executeCommand('workbench.action.closeActiveEditor')
@@ -50,7 +54,10 @@ suite('🧪Header Test Suite', () => {
   })
 
   test('getHeaderRange 3 test', async () => {
-    const doc = await vscode.workspace.openTextDocument({ language: 'javascript', content: '/** balabala */\r' })
+    const doc = await vscode.workspace.openTextDocument({
+      language: 'javascript',
+      content: '/** balabala */\r',
+    })
     const range = getHeaderRange(doc, styleC)
     logger.info(doc.getText())
     vscode.commands.executeCommand('workbench.action.closeActiveEditor')
@@ -64,7 +71,7 @@ suite('🧪Header Test Suite', () => {
   test('getHeaderRange 4 test', async () => {
     const doc = await vscode.workspace.openTextDocument({
       language: 'javascript',
-      content: '/** balabala \r balabala \r**/\r'
+      content: '/** balabala \r balabala \r**/\r',
     })
     const range = getHeaderRange(doc, styleC)
     logger.info(doc.getText())
@@ -79,7 +86,7 @@ suite('🧪Header Test Suite', () => {
   test('getHeaderRange 5 test', async () => {
     const doc = await vscode.workspace.openTextDocument({
       language: 'javascript',
-      content: '/** balabala \r balabala \r **/\r'
+      content: '/** balabala \r balabala \r **/\r',
     })
     const range = getHeaderRange(doc, styleC)
     logger.info(doc.getText())
@@ -94,7 +101,7 @@ suite('🧪Header Test Suite', () => {
   test('getHeaderRange 6 test', async () => {
     const doc = await vscode.workspace.openTextDocument({
       language: 'javascript',
-      content: '/** balabala \r balabala \r **/\r balabala \r'
+      content: '/** balabala \r balabala \r **/\r balabala \r',
     })
     const range = getHeaderRange(doc, styleC)
     logger.info(doc.getText())
@@ -109,7 +116,7 @@ suite('🧪Header Test Suite', () => {
   test('getHeaderRange 7 test', async () => {
     const doc = await vscode.workspace.openTextDocument({
       language: 'javascript',
-      content: '/** balabala \r balabala \r **/\r \r balabala \r'
+      content: '/** balabala \r balabala \r **/\r \r balabala \r',
     })
     const range = getHeaderRange(doc, styleC)
     logger.info(doc.getText())
@@ -137,7 +144,7 @@ suite('🧪Header Test Suite', () => {
     const element = buildLine('@Author', ' ', ': ', styleC.commentElementWidth)
     const doc = await vscode.workspace.openTextDocument({
       language: 'javascript',
-      content: `/**\r * ${element} Auto Header Plus \r **/\r \r`
+      content: `/**\r * ${element} Auto Header Plus \r **/\r \r`,
     })
     const range = getHeaderRange(doc, styleC)
     logger.info(doc.getText())
@@ -152,7 +159,7 @@ suite('🧪Header Test Suite', () => {
     const element = buildLine('@Author', '', ':', styleC.commentElementWidth)
     const doc = await vscode.workspace.openTextDocument({
       language: 'javascript',
-      content: `/**\r * ${element} Auto Header Plus \r **/\r \r`
+      content: `/**\r * ${element} Auto Header Plus \r **/\r \r`,
     })
     const range = getHeaderRange(doc, styleC)
     logger.info(doc.getText())
@@ -167,7 +174,7 @@ suite('🧪Header Test Suite', () => {
     const element = buildLine('@Author', '', '', styleC.commentElementWidth)
     const doc = await vscode.workspace.openTextDocument({
       language: 'javascript',
-      content: `/**\r * ${element} Auto Header Plus \r **/\r \r`
+      content: `/**\r * ${element} Auto Header Plus \r **/\r \r`,
     })
     const range = getHeaderRange(doc, styleC)
     logger.info(doc.getText())
@@ -186,15 +193,15 @@ suite('🧪Header Test Suite', () => {
       'YYYY-MM-DD HH:mm:ss',
       ['Author', 'DateCreated', 'DateModified', 'FullPath', 'RelativePath', 'ShortPath'],
       {
-        'Author': 'Auto Header Plus',
-        'DateCreated': 'CREATED_DATE',
-        'DateModified': 'MODIFIED_DATE',
-        'FullPath': 'FULL_PATH',
-        'RelativePath': 'RELATIVE_PATH',
-        'ShortPath': 'SHORTNAME_PATH'
+        Author: 'Auto Header Plus',
+        DateCreated: 'CREATED_DATE',
+        DateModified: 'MODIFIED_DATE',
+        FullPath: 'FULL_PATH',
+        RelativePath: 'RELATIVE_PATH',
+        ShortPath: 'SHORTNAME_PATH',
       },
       {},
-      {}
+      {},
     )
 
     logger.info(header)
@@ -203,18 +210,18 @@ suite('🧪Header Test Suite', () => {
   test('getHeaderRange with shebang test 1', async () => {
     // Mock shell script style (similar to style.4 in package.json)
     const shellStyle = {
-      applyTo: "sh",
-      firstLineStart: "####",
-      firstLineMiddle: "",
-      firstLineEnd: "",
-      middleLineStart: "# ",
-      commentElementPrefix: "@",
-      commentElementSuffix: ": ",
-      middleLineEnd: "",
-      lastLineStart: "",
-      lastLineMiddle: "",
-      lastLineEnd: "####"
-    };
+      applyTo: 'sh',
+      firstLineStart: '####',
+      firstLineMiddle: '',
+      firstLineEnd: '',
+      middleLineStart: '# ',
+      commentElementPrefix: '@',
+      commentElementSuffix: ': ',
+      middleLineEnd: '',
+      lastLineStart: '',
+      lastLineMiddle: '',
+      lastLineEnd: '####',
+    }
 
     // Test document with shebang and header comment
     const text1 = `#!/bin/bash
@@ -223,32 +230,32 @@ echo "Hello World"`
 
     const doc1 = await vscode.workspace.openTextDocument({
       language: 'shellscript',
-      content: text1
-    });
+      content: text1,
+    })
 
-    const range1 = getHeaderRange(doc1, shellStyle);
-    console.log('Range with shebang:\n', text1);
+    const range1 = getHeaderRange(doc1, shellStyle)
+    console.log('Range with shebang:\n', text1)
 
-    assert.strictEqual(range1.start.line, 1);
-    assert.strictEqual(range1.start.character, 0);
-    vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+    assert.strictEqual(range1.start.line, 1)
+    assert.strictEqual(range1.start.character, 0)
+    vscode.commands.executeCommand('workbench.action.closeActiveEditor')
   })
 
   test('getHeaderRange with shebang test 2', async () => {
     // Mock shell script style (similar to style.4 in package.json)
     const shellStyle = {
-      applyTo: "sh",
-      firstLineStart: "####",
-      firstLineMiddle: "",
-      firstLineEnd: "",
-      middleLineStart: "# ",
-      commentElementPrefix: "@",
-      commentElementSuffix: ": ",
-      middleLineEnd: "",
-      lastLineStart: "",
-      lastLineMiddle: "",
-      lastLineEnd: "####"
-    };
+      applyTo: 'sh',
+      firstLineStart: '####',
+      firstLineMiddle: '',
+      firstLineEnd: '',
+      middleLineStart: '# ',
+      commentElementPrefix: '@',
+      commentElementSuffix: ': ',
+      middleLineEnd: '',
+      lastLineStart: '',
+      lastLineMiddle: '',
+      lastLineEnd: '####',
+    }
 
     // Test document with shebang and header comment
     const text2 = `#!/bin/bash
@@ -264,33 +271,33 @@ echo "Hello World"`
 
     const doc2 = await vscode.workspace.openTextDocument({
       language: 'shellscript',
-      content: text2
-    });
+      content: text2,
+    })
 
-    const range2 = getHeaderRange(doc2, shellStyle);
-    console.log('Range with shebang:\n', text2);
+    const range2 = getHeaderRange(doc2, shellStyle)
+    console.log('Range with shebang:\n', text2)
 
-    assert.strictEqual(range2.start.line, 1);
-    assert.strictEqual(range2.start.character, 0);
+    assert.strictEqual(range2.start.line, 1)
+    assert.strictEqual(range2.start.character, 0)
 
-    vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+    vscode.commands.executeCommand('workbench.action.closeActiveEditor')
   })
 
   test('getHeaderRange with shebang test 3', async () => {
     // Mock shell script style (similar to style.4 in package.json)
     const shellStyle = {
-      applyTo: "sh",
-      firstLineStart: "####",
-      firstLineMiddle: "",
-      firstLineEnd: "",
-      middleLineStart: "# ",
-      commentElementPrefix: "@",
-      commentElementSuffix: ": ",
-      middleLineEnd: "",
-      lastLineStart: "",
-      lastLineMiddle: "",
-      lastLineEnd: "####"
-    };
+      applyTo: 'sh',
+      firstLineStart: '####',
+      firstLineMiddle: '',
+      firstLineEnd: '',
+      middleLineStart: '# ',
+      commentElementPrefix: '@',
+      commentElementSuffix: ': ',
+      middleLineEnd: '',
+      lastLineStart: '',
+      lastLineMiddle: '',
+      lastLineEnd: '####',
+    }
 
     // Test document without shebang for comparison
     const text3 = `#######################
@@ -305,15 +312,15 @@ echo "Hello World"`
 
     const doc3 = await vscode.workspace.openTextDocument({
       language: 'shellscript',
-      content: text3
-    });
+      content: text3,
+    })
 
-    const range3 = getHeaderRange(doc3, shellStyle);
-    console.log('Range without shebang:\n', text3);
+    const range3 = getHeaderRange(doc3, shellStyle)
+    console.log('Range without shebang:\n', text3)
 
-    assert.strictEqual(range3.start.line, 0);
-    assert.strictEqual(range3.start.character, 0);
+    assert.strictEqual(range3.start.line, 0)
+    assert.strictEqual(range3.start.character, 0)
 
-    vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+    vscode.commands.executeCommand('workbench.action.closeActiveEditor')
   })
 })

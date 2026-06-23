@@ -2,19 +2,18 @@
  * @Author                : Robert Huang<56649783@qq.com>                      *
  * @CreatedDate           : 2025-08-19 23:31:28                                *
  * @LastEditors           : Robert Huang<56649783@qq.com>                      *
- * @LastEditDate          : 2026-02-11 00:18:28                                *
- * @FilePath              : auto-header-plus/src/main/core.js                  *
+ * @LastEditDate          : 2026-06-23 19:59:56                                *
+ * @FilePath              : auto-header-plus/src/core.js                       *
  * @CopyRight             : MerBleueAviation                                   *
  ******************************************************************************/
-const path = require('path')
-const vscode = require('vscode')
-const logger = require('./logger')
-const { getApplyStyle, getDateValue, getFinalString, getPathValue, splitString } = require('./utils')
+import * as path from 'path'
+import * as vscode from 'vscode'
+import { logger } from './logger.js'
+import { getApplyStyle, getDateValue, getFinalString, getPathValue, splitString } from './utils.js'
+import { config } from './config.js'
+import { getL10n } from './l10n.js'
+
 const SPEC_VALUE = ['MODIFIED_DATE', 'CREATED_DATE', 'FULL_PATH', 'RELATIVE_PATH', 'SHORTNAME_PATH']
-
-const config = require('./config')
-
-const t = vscode.l10n.t
 
 /**
  * Find header range in document by style setting,
@@ -34,13 +33,14 @@ const getHeaderRange = (doc, style) => {
   let endLine = 0
   let endChar = 0
 
-  const firstLineSymbol = style.firstLineStart || style.firstLineMiddle || style.firstLineEnd || '/**'
+  const firstLineSymbol =
+    style.firstLineStart || style.firstLineMiddle || style.firstLineEnd || '/**'
   const lastLineSymbol = style.lastLineEnd || style.lastLineMiddle || style.lastLineStart || '**/'
 
   // Check if it's a shell file and has a shebang line
   const extArr = style.applyTo.replace(/[,|;|、|:|.|/||]/g, ' ').split(' ')
-  const isShellFile = extArr.includes("bash") || extArr.includes("sh")
-  const hasShebang = isShellFile && doc.lineCount > 0 && doc.lineAt(0).text.startsWith("#!")
+  const isShellFile = extArr.includes('bash') || extArr.includes('sh')
+  const hasShebang = isShellFile && doc.lineCount > 0 && doc.lineAt(0).text.startsWith('#!')
   //console.debug('hasShebang:', hasShebang)
 
   if (hasShebang) {
@@ -196,7 +196,7 @@ const buildLine = (s, m, e, width) => {
   } else {
     const len = width - s.length - e.length
     if (len < 0) {
-      logger.warn(t('Width is too short'))
+      logger.warn(getL10n('Width is too short'))
       lineText += e
     } else {
       const middle = m.repeat(len)
@@ -224,14 +224,16 @@ const genNewHeader = async (
   commentElements,
   commentElementsValues,
   customCommentElementsValues,
-  oldCommentElementsValues
+  oldCommentElementsValues,
 ) => {
   let headerText = ''
   const allCreateDateDiff = config.get('allCreateDateDiff', true)
   const eolText = doc.eol === vscode.EndOfLine.LF ? '\n' : '\r\n'
 
   // firstLine
-  headerText += buildLine(style.firstLineStart, style.firstLineMiddle, style.firstLineEnd, style.lineWidth) + eolText
+  headerText +=
+    buildLine(style.firstLineStart, style.firstLineMiddle, style.firstLineEnd, style.lineWidth) +
+    eolText
 
   // middleLine
   for (let i = 0; i < commentElements.length; i++) {
@@ -245,51 +247,60 @@ const genNewHeader = async (
       style.commentElementPrefix + element,
       ' ',
       style.commentElementSuffix,
-      style.commentElementWidth
+      style.commentElementWidth,
     )
     let elementValueText = ''
 
     if (elementValue) {
-      elementValueText = await getFinalString(elementValue) || ''
+      elementValueText = (await getFinalString(elementValue)) || ''
       const ELEMENT_VALUE_TEXT = elementValueText.toUpperCase()
 
+      // oxlint-disable-next-line no-unused-expressions
       SPEC_VALUE.includes(ELEMENT_VALUE_TEXT) && ELEMENT_VALUE_TEXT.endsWith('PATH')
         ? (elementValueText = getPathValue(ELEMENT_VALUE_TEXT, doc.uri))
         : null
 
+      // oxlint-disable-next-line no-unused-expressions
       SPEC_VALUE.includes(ELEMENT_VALUE_TEXT) && ELEMENT_VALUE_TEXT.endsWith('DATE')
         ? (elementValueText = getDateValue(
-          ELEMENT_VALUE_TEXT,
-          dateFormat,
-          allCreateDateDiff ? oldCommentElementsValues[element] : undefined
-        ))
+            ELEMENT_VALUE_TEXT,
+            dateFormat,
+            allCreateDateDiff ? oldCommentElementsValues[element] : undefined,
+          ))
         : null
     } else {
-      logger.info(t("Element {0} value didn't set in config", element))
+      logger.info(getL10n("Element {0} value didn't set in config", element))
       elementText = ''
       elementValueText = ''
     }
 
     // build whole middle line, fill with space
-    headerText += buildLine(
-      style.middleLineStart + elementText + elementValueText,
-      style.middleLineEnd.length > 0 ? ' ' : '',
-      style.middleLineEnd,
-      style.lineWidth
-    ) + eolText
+    headerText +=
+      buildLine(
+        style.middleLineStart + elementText + elementValueText,
+        style.middleLineEnd.length > 0 ? ' ' : '',
+        style.middleLineEnd,
+        style.lineWidth,
+      ) + eolText
   }
 
   // additional comment
   const additionalComment = config.get('additionalComment', '')
   if (additionalComment.length > 0) {
-    const additionalCommentText = await getFinalString(additionalComment) || ''
+    const additionalCommentText = (await getFinalString(additionalComment)) || ''
     splitString(additionalCommentText, style.lineWidth).forEach((line) => {
-      headerText += buildLine(style.middleLineStart + line, ' ', style.middleLineEnd, style.lineWidth) + eolText
+      headerText +=
+        buildLine(style.middleLineStart + line, ' ', style.middleLineEnd, style.lineWidth) + eolText
     })
   }
 
   // lastLine
-  headerText += buildLine(style.lastLineStart, style.lastLineMiddle, style.lastLineEnd, style.lineWidth)
+  headerText += buildLine(
+    style.lastLineStart,
+    style.lastLineMiddle,
+    style.lastLineEnd,
+    style.lineWidth,
+  )
 
   return headerText
 }
@@ -298,7 +309,7 @@ const addHeader = async () => {
   const editor = vscode.window.activeTextEditor
   if (editor) {
     try {
-      logger.info(t('Adding header to {0}', editor.document.fileName))
+      logger.info(getL10n('Adding header to {0}', editor.document.fileName))
       const ext = path.extname(editor.document.fileName)
 
       const style = getApplyStyle(config.get('style'), ext)
@@ -326,7 +337,7 @@ const addHeader = async () => {
         commentElements,
         commentElementsValue,
         customCommentElementsValue,
-        oldCommentElementsValue
+        oldCommentElementsValue,
       )
       logger.info(`${headerRange.start.line.toString()}  ${headerRange.end.line.toString()}`)
 
@@ -341,4 +352,4 @@ const addHeader = async () => {
   }
 }
 // const throttleAddHeader = throttle(addHeader, config.get('throttleTime', 60000), { leading: true, trailing: false })
-module.exports = { getHeaderRange, addHeader, buildLine, genNewHeader, getElementValue }
+export { getHeaderRange, addHeader, buildLine, genNewHeader, getElementValue }
