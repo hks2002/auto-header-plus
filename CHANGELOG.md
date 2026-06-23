@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.1](https://github.com/hks2002/auto-header-plus/compare/v1.7.0...v1.7.1) (2026-06-23)
+
+
+### Bug Fixes
+
+* 🐛fix action bugs ([4a1f7c5](https://github.com/hks2002/auto-header-plus/commit/4a1f7c507e71adea49202654de7d6c92843667a7))
+
 ## [1.7.0](https://github.com/hks2002/auto-header-plus/compare/v1.6.1...v1.7.0) (2026-02-11)
 
 
