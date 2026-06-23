@@ -12,13 +12,9 @@
 ![Logo](./images/icon.png)
 
 ![Github Version](https://img.shields.io/github/package-json/v/hks2002/auto-header-plus)
-![Github Build Status](https://img.shields.io/github/actions/workflow/status/hks2002/auto-header-plus/Build_Release.yml)
+![Github Build Status](https://img.shields.io/github/actions/workflow/status/hks2002/auto-header-plus/Build_Test_Release.yml)
 ![GitHub License](https://img.shields.io/github/license/hks2002/auto-header-plus)
 ![GitHub Starts](https://img.shields.io/github/stars/hks2002/auto-header-plus)
-![VS marketplace Version](https://img.shields.io/visual-studio-marketplace/v/MerBleueAviation.auto-header-plus)
-![downloads](https://img.shields.io/visual-studio-marketplace/d/MerBleueAviation.auto-header-plus)
-![installs](https://img.shields.io/visual-studio-marketplace/i/MerBleueAviation.auto-header-plus)
-![rating](https://img.shields.io/visual-studio-marketplace/r/MerBleueAviation.auto-header-plus)
 
 [English](./README.md) | [简体中文](./README.zh-cn.md)
 
