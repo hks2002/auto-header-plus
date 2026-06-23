@@ -6,12 +6,13 @@
 * @FilePath              : auto-header-plus/README.md
 * @CopyRight             : MerBleueAviation
 -->
+
 # Auto Header
 
 ![Logo](https://github.com/hks2002/auto-header-plus/raw/master/images/icon.png)
 
 ![Github Version](https://img.shields.io/github/package-json/v/hks2002/auto-header-plus)
-![Github Build Status](https://img.shields.io/github/actions/workflow/status/hks2002/auto-header-plus/Build.yml)
+![Github Build Status](https://img.shields.io/github/actions/workflow/status/hks2002/auto-header-plus/Build_Release.yml)
 ![GitHub License](https://img.shields.io/github/license/hks2002/auto-header-plus)
 ![GitHub Starts](https://img.shields.io/github/stars/hks2002/auto-header-plus)
 ![VS marketplace Version](https://img.shields.io/visual-studio-marketplace/v/MerBleueAviation.auto-header-plus)
