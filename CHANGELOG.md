@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/hks2002/auto-header-plus/compare/v1.7.1...v1.8.0) (2026-11-27)
+
+
+### Features
+
+* ✨auto package/release ([e5452f3](https://github.com/hks2002/auto-header-plus/commit/e5452f353bb072c9312e62c556d0120ce6279f10))
+
 ## [1.7.1](https://github.com/hks2002/auto-header-plus/compare/v1.7.0...v1.7.1) (2026-06-23)
 
 
