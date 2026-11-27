@@ -39,8 +39,25 @@ jobs:
       - run: xvfb-run -a pnpm test
         if: runner.os == 'Linux'
 
-      - uses: googleapis/release-please-action@v4
+      - uses: googleapis/release-please-action@v5
+        id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
           config-file: release-please-config.json
+
+      - name: Package VSIX
+        if: ${{ steps.release.outputs.release_created == 'true' }}
+        run: pnpm run package
+
+      - name: Upload VSIX to GitHub Release
+        if: ${{ steps.release.outputs.release_created == 'true' }}
+        run: gh release upload "${{ steps.release.outputs.tag_name }}" *.vsix --clobber
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to VS Code Marketplace
+        if: ${{ steps.release.outputs.release_created == 'true' }}
+        run: pnpm run publish
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
