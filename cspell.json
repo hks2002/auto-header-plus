@@ -7,14 +7,14 @@
     {
       "addWords": true,
       "name": "project-words",
-      "path": "./cspell.words.txt"
+      "path": ".cspell/words.txt"
     }
   ],
   "ignorePaths": [
     "node_modules",
     "pnpm-lock.yaml",
-    "/cspell.words.txt",
-    "/.gitignore"
+    ".cspell/words.txt",
+    ".gitignore"
   ],
   "version": "0.2"
 }
